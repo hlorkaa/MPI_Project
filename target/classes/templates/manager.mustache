@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Manager</title>
+    </head>
+
+    <body>
+        <table border="1" cellpadding="1" cellspacing="1" style="width:1024px;">
+            <tbody>
+                <tr>
+                    <td>Время</td>
+                    <td style="text-align: right;"><input name="exitButton" type="button" value="Выход" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>Текущие задачи</strong></p>
+                        {{#tasks}}
+                            <div>
+                                <b>{{id}}</b>
+                                <span>{{name}}</span>
+                                <i>{{status}}</i>
+                                <form action="/manager/delete" method="post">
+                                    <input type="hidden" name="deleteTask_id" value={{id}}>
+                                    <button name="task_deleteButton" type="submit">Удалить</button>
+                                </form>
+                                <form action="/manager/choose" method="post">
+                                    <input type="hidden" name="chooseTask_id" value={{id}}>
+                                    <button name="task_changeButton" type="submit">Просмотр и редактирование</button>
+                                </form>
+                            </div>
+                        {{/tasks}}
+                    </td>
+                    <td colspan="1" rowspan="2">
+                        <p><strong>Новая задача</strong></p>
+
+                        <form action="/manager/create" method="post">
+                            <p>
+                                <input type="text" name="newTask_name" placeholder="Введите название">
+                                <input type="text" name="newTask_deadline" placeholder="Введите дедлайн">
+                            </p>
+
+                            <p>
+                                <input type="radio" id="taskStatus_submitted" name="newTask_status" value="taskStatus_submitted" checked><label for="taskStatus_submitted">Утверждено</label>
+                                <input type="radio" id="taskStatus_ready" name="newTask_status" value="taskStatus_ready" checked><label for="taskStatus_ready">Готово</label>
+                                <input type="radio" id="taskStatus_wip" name="newTask_status" value="taskStatus_wip" checked><label for="taskStatus_wip">В процессе</label>
+                                <input type="radio" id="taskStatus_problems" name="newTask_status" value="taskStatus_problems" checked><label for="taskStatus_problems">Возникли проблемы</label>
+                                <input type="radio" id="taskStatus_stopped" name="newTask_status" value="taskStatus_stopped" checked><label for="taskStatus_stopped">Приостановлено</label>
+                            </p>
+
+                            <p><textarea cols="40" name="newTask_description" rows="10" placeholder="Введите описание"></textarea></p>
+
+                            <p><input type="text" name="newTask_workman" placeholder="Введите исполнителя"></p>
+
+                            <p>
+                                <input type="submit" value="ОК">
+                                <input type="reset" value="Отмена">
+                            </p>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong>Редактировать задачу</strong></p>
+
+                        <form action="/manager/edit" method="post">
+                            <p>
+                                <input type="text" name="editTask_name" placeholder="Введите название" value={task_name}>
+                                <input type="text" name="editTask_deadline" placeholder="Введите дедлайн" value={task_deadline}>
+                            </p>
+
+                            <p>
+                                <input type="radio" id="taskStatus_submitted" name="editTask_status" value="Утверждено" checked><label for="taskStatus_submitted">Утверждено</label>
+                                <input type="radio" id="taskStatus_ready" name="editTask_status" value="Готово"><label for="taskStatus_ready">Готово</label>
+                                <input type="radio" id="taskStatus_wip" name="editTask_status" value="В процессе"><label for="taskStatus_wip">В процессе</label>
+                                <input type="radio" id="taskStatus_problems" name="editTask_status" value="Возникли проблемы"><label for="taskStatus_problems">Возникли проблемы</label>
+                                <input type="radio" id="taskStatus_stopped" name="editTask_status" value="Приостановлено"><label for="taskStatus_stopped">Приостановлено</label>
+                            </p>
+
+                            <p><textarea cols="40" name="editTask_description" rows="10" placeholder="Введите описание">{task_description}</textarea></p>
+
+                            <p><input type="text" name="editTask_workman" placeholder="Введите исполнителя" value={task_workman}></p>
+
+                            <p>
+                                <input type="submit" value="ОК">
+                                <input type="reset" value="Отмена">
+                            </p>
+
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>&nbsp;</p>
+    </body>
+</html>
