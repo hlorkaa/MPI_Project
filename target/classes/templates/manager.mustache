@@ -64,21 +64,22 @@
 
                         <form action="/manager/edit" method="post">
                             <p>
-                                <input type="text" name="editTask_name" placeholder="Введите название" value={{task_name}}>
-                                <input type="text" name="editTask_deadline" placeholder="Введите дедлайн" value={{task_deadline}}>
+                                <input type="hidden" name="task_id" value={{task_id}}>
+                                <input type="text" name="task_name" placeholder="Введите название" value={{task_name}}>
+                                <input type="text" name="task_deadline" placeholder="Введите дедлайн" value={{task_deadline}}>
                             </p>
 
                             <p>
-                                <input type="radio" id="taskStatus_submitted" name="editTask_status" value="Утверждено" checked><label for="taskStatus_submitted">Утверждено</label>
-                                <input type="radio" id="taskStatus_ready" name="editTask_status" value="Готово"><label for="taskStatus_ready">Готово</label>
-                                <input type="radio" id="taskStatus_wip" name="editTask_status" value="В процессе"><label for="taskStatus_wip">В процессе</label>
-                                <input type="radio" id="taskStatus_problems" name="editTask_status" value="Возникли проблемы"><label for="taskStatus_problems">Возникли проблемы</label>
-                                <input type="radio" id="taskStatus_stopped" name="editTask_status" value="Приостановлено"><label for="taskStatus_stopped">Приостановлено</label>
+                                <input type="radio" id="taskStatus_submitted" name="task_status" value="Утверждено" checked><label for="taskStatus_submitted">Утверждено</label>
+                                <input type="radio" id="taskStatus_ready" name="task_status" value="Готово"><label for="taskStatus_ready">Готово</label>
+                                <input type="radio" id="taskStatus_wip" name="task_status" value="В процессе"><label for="taskStatus_wip">В процессе</label>
+                                <input type="radio" id="taskStatus_problems" name="task_status" value="Возникли проблемы"><label for="taskStatus_problems">Возникли проблемы</label>
+                                <input type="radio" id="taskStatus_stopped" name="task_status" value="Приостановлено"><label for="taskStatus_stopped">Приостановлено</label>
                             </p>
 
-                            <p><textarea cols="40" name="editTask_description" rows="10" placeholder="Введите описание">{{task_description}}</textarea></p>
+                            <p><textarea cols="40" name="task_description" rows="10" placeholder="Введите описание">{{task_description}}</textarea></p>
 
-                            <p><input type="text" name="editTask_workman" placeholder="Введите исполнителя" value={{task_workman}}></p>
+                            <p><input type="text" name="task_workman" placeholder="Введите исполнителя" value={{task_workman}}></p>
 
                             <p>
                                 <input type="submit" value="ОК">

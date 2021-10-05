@@ -84,7 +84,7 @@ public class Task {
         return workman;
     }
 
-    public void setWorker(String worker) {
+    public void setWorkman(String workman) {
         this.workman = workman;
     }
 }
