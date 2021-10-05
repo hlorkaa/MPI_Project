@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <title>Работник</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1" >
+    <tbody>
+    <tr>
+        <td>Время</td>
+        <td style="text-align: right;"><input name="exitButton" type="button" value="Выход" /></td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Текущие задачи</strong></p>
+            {{#tasks}}
+                <div>
+                    <b>{{id}}</b>
+                    <span>{{name}}</span>
+                    <i>{{status}}</i>
+                    <form action="/workman/choose" method="post">
+                        <input type="hidden" name="chooseTask_id" value={{id}}>
+                        <button name="task_changeButton" type="submit">Просмотр и редактирование</button>
+                    </form>
+                </div>
+            {{/tasks}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Редактировать задачу</strong></p>
+
+            <form action="/workman/edit" method="post">
+                <p>
+                    <input type="hidden" name="task_id" value={{task_id}}>
+                    <input readonly type="text" name="task_name" placeholder="" value={{task_name}}>
+                    <input readonly type="text" name="task_deadline" placeholder="" value={{task_deadline}}>
+                </p>
+
+                <p>
+                    <input type="radio" id="taskStatus_ready" name="task_status" value="Готово"><label for="taskStatus_ready">Готово</label>
+                    <input type="radio" id="taskStatus_wip" name="task_status" value="Выполняется"><label for="taskStatus_wip" checked>Выполняется</label>
+                    <input type="radio" id="taskStatus_problems" name="task_status" value="Возникли проблемы"><label for="taskStatus_problems">Возникли проблемы</label>
+                </p>
+
+                <p><textarea cols="40" name="task_description" rows="10" placeholder="" readonly>{{task_description}}</textarea></p>
+
+                <p><input readonly type="text" name="task_workman" placeholder="" value={{task_workman}}></p>
+
+                <p>
+                    <input type="submit" value="ОК">
+                </p>
+            </form>
+            <form  action="/workman/cancel" method="post">
+                <p>
+                    <input type="submit" value="Отмена">
+                </p>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,21 +1,25 @@
+
 package com.example.MPI_Project;
 
 import com.example.MPI_Project.domain.Task;
 import com.example.MPI_Project.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
 @Controller
-@RequestMapping("/manager")
-public class ManagerController {
+@RequestMapping("/workman")
+public class WorkmanController {
     @Autowired
     private TaskRepo taskRepo;
 
-    public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
-        Iterable<Task> tasks = taskRepo.findAll();
+    public void putVariables(String workman_name, Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
+        Iterable<Task> tasks = taskRepo.findByWorkman(workman_name);
         model.put("tasks", tasks);
         model.put("task_id", id);
         model.put("task_name", name);
@@ -30,42 +34,19 @@ public class ManagerController {
     }
 
     @GetMapping
-    public String start(Map<String, Object> model) {
+    public String start (
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
+            Map<String, Object> model) {
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
-        return "manager";
+        putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
+        return "workman";
     }
-
-    @PostMapping("/create")
-    public String createNewTask (
-                                 @RequestParam String newTask_name,
-                                 @RequestParam String newTask_deadline,
-                                 @RequestParam String newTask_status,
-                                 @RequestParam String newTask_description,
-                                 @RequestParam String newTask_workman,
-                                 Map<String, Object> model) {
-        Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
-        taskRepo.save(newTask);
-
-        putVariables(model, 0,  "",  "",  "",  "",  "");
-        return "manager";
-    }
-
-    @PostMapping("/delete")
-    public String deleteTask (@RequestParam Integer deleteTask_id, Map<String, Object> model) {
-        taskRepo.deleteById(deleteTask_id);
-
-        putVariables(model, 0,  "",  "",  "",  "",  "");
-
-        return "manager";
-    }
-
-
 
     @PostMapping("/choose")
     public String chooseTask (
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
             @RequestParam Integer chooseTask_id,
-                    Map<String, Object> model) {
+            Map<String, Object> model) {
 
         Task task = findTask(chooseTask_id);
         String task_name = task.getName();
@@ -74,13 +55,14 @@ public class ManagerController {
         String task_description = task.getDescription();
         String task_workman = task.getWorkman();
 
-        putVariables(model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
+        putVariables(workman_name, model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
 
-        return "manager";
+        return "workman";
     }
 
     @PostMapping("/edit")
     public String editTask (
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
             @RequestParam Integer task_id,
             @RequestParam String task_name,
             @RequestParam String task_deadline,
@@ -99,17 +81,17 @@ public class ManagerController {
             taskRepo.save(task);
         }
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
+        putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        return "workman";
     }
 
     @PostMapping("/cancel")
-    public String cancelTaskEdition (Map<String, Object> model) {
-        putVariables(model, 0,  "",  "",  "",  "",  "");
+    public String cancelTaskEdition (
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
+            Map<String, Object> model) {
+        putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        return "workman";
     }
 }
-
-
