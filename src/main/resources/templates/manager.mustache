@@ -40,11 +40,11 @@
                             </p>
 
                             <p>
-                                <input type="radio" id="taskStatus_submitted" name="newTask_status" value="taskStatus_submitted" checked><label for="taskStatus_submitted">Утверждено</label>
-                                <input type="radio" id="taskStatus_ready" name="newTask_status" value="taskStatus_ready" checked><label for="taskStatus_ready">Готово</label>
-                                <input type="radio" id="taskStatus_wip" name="newTask_status" value="taskStatus_wip" checked><label for="taskStatus_wip">В процессе</label>
-                                <input type="radio" id="taskStatus_problems" name="newTask_status" value="taskStatus_problems" checked><label for="taskStatus_problems">Возникли проблемы</label>
-                                <input type="radio" id="taskStatus_stopped" name="newTask_status" value="taskStatus_stopped" checked><label for="taskStatus_stopped">Приостановлено</label>
+                                <input type="radio" id="taskStatus_submitted" name="newTask_status" value="Утверждено" checked><label for="taskStatus_submitted">Утверждено</label>
+                                <input type="radio" id="taskStatus_ready" name="newTask_status" value="Готово" checked><label for="taskStatus_ready">Готово</label>
+                                <input type="radio" id="taskStatus_wip" name="newTask_status" value="В процессе" checked><label for="taskStatus_wip">В процессе</label>
+                                <input type="radio" id="taskStatus_problems" name="newTask_status" value="Возникли проблемы" checked><label for="taskStatus_problems">Возникли проблемы</label>
+                                <input type="radio" id="taskStatus_stopped" name="newTask_status" value="Приостановлено" checked><label for="taskStatus_stopped">Приостановлено</label>
                             </p>
 
                             <p><textarea cols="40" name="newTask_description" rows="10" placeholder="Введите описание"></textarea></p>
@@ -83,9 +83,12 @@
 
                             <p>
                                 <input type="submit" value="ОК">
-                                <input type="reset" value="Отмена">
                             </p>
-
+                        </form>
+                        <form  action="/manager/cancel" method="post">
+                            <p>
+                                <input type="submit" value="Отмена">
+                            </p>
                         </form>
                     </td>
                 </tr>

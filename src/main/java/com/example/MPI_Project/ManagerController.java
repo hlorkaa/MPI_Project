@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/manager")
@@ -15,18 +14,25 @@ public class ManagerController {
     @Autowired
     private TaskRepo taskRepo;
 
-    //public void putVariables(Map<String, Object> model)
+    public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
+        Iterable<Task> tasks = taskRepo.findAll();
+        model.put("tasks", tasks);
+        model.put("task_id", id);
+        model.put("task_name", name);
+        model.put("task_deadline", deadline);
+        model.put("task_status", status);
+        model.put("task_description", description);
+        model.put("task_workman", workman);
+    }
+
+    public Task findTask(Integer id) {
+        return taskRepo.findById(id).orElse(new Task());
+    }
 
     @GetMapping
     public String showAllTasks (Map<String, Object> model) {
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
-        model.put("task_id", "");
-        model.put("task_name", "");
-        model.put("task_deadline", "");
-        model.put("task_status", "");
-        model.put("task_description", "");
-        model.put("task_workman", "");
+
+        putVariables(model, 0,  "",  "",  "",  "",  "");
         return "manager";
     }
 
@@ -41,15 +47,7 @@ public class ManagerController {
         Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
         taskRepo.save(newTask);
 
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
-        model.put("task_id", "");
-        model.put("task_name", "");
-        model.put("task_deadline", "");
-        model.put("task_status", "");
-        model.put("task_description", "");
-        model.put("task_workman", "");
-
+        putVariables(model, 0,  "",  "",  "",  "",  "");
         return "manager";
     }
 
@@ -57,21 +55,12 @@ public class ManagerController {
     public String deleteTask (@RequestParam Integer deleteTask_id, Map<String, Object> model) {
         taskRepo.deleteById(deleteTask_id);
 
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
-        model.put("task_id", "");
-        model.put("task_name", "");
-        model.put("task_deadline", "");
-        model.put("task_status", "");
-        model.put("task_description", "");
-        model.put("task_workman", "");
+        putVariables(model, 0,  "",  "",  "",  "",  "");
 
         return "manager";
     }
 
-    public Task findTask(Integer id) {
-        return taskRepo.findById(id).orElse(new Task());
-    }
+
 
     @PostMapping("/choose")
     public String chooseTask (
@@ -85,16 +74,7 @@ public class ManagerController {
         String task_description = task.getDescription();
         String task_workman = task.getWorkman();
 
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
-        model.put("task_id", chooseTask_id);
-        model.put("task_name", task_name);
-        model.put("task_deadline", task_deadline);
-        model.put("task_status", task_status);
-        model.put("task_description", task_description);
-        model.put("task_workman", task_workman);
-
-        //taskRepo.save(task);
+        putVariables(model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
 
         return "manager";
     }
@@ -115,17 +95,21 @@ public class ManagerController {
         task.setStatus(task_status);
         task.setDescription(task_description);
         task.setWorkman(task_workman);
-        taskRepo.save(task);
+        if (task_id != 0) {
+            taskRepo.save(task);
+        }
 
-        Iterable<Task> tasks = taskRepo.findAll();
-        model.put("tasks", tasks);
-        model.put("task_id", "");
-        model.put("task_name", "");
-        model.put("task_deadline", "");
-        model.put("task_status", "");
-        model.put("task_description", "");
-        model.put("task_workman", "");
+        putVariables(model, 0,  "",  "",  "",  "",  "");
+
+        return "manager";
+    }
+
+    @PostMapping("/cancel")
+    public String cancelTaskEdition (Map<String, Object> model) {
+        putVariables(model, 0,  "",  "",  "",  "",  "");
 
         return "manager";
     }
 }
+
+
