@@ -64,8 +64,8 @@
 
                         <form action="/manager/edit" method="post">
                             <p>
-                                <input type="text" name="editTask_name" placeholder="Введите название" value={task_name}>
-                                <input type="text" name="editTask_deadline" placeholder="Введите дедлайн" value={task_deadline}>
+                                <input type="text" name="editTask_name" placeholder="Введите название" value={{task_name}}>
+                                <input type="text" name="editTask_deadline" placeholder="Введите дедлайн" value={{task_deadline}}>
                             </p>
 
                             <p>
@@ -76,9 +76,9 @@
                                 <input type="radio" id="taskStatus_stopped" name="editTask_status" value="Приостановлено"><label for="taskStatus_stopped">Приостановлено</label>
                             </p>
 
-                            <p><textarea cols="40" name="editTask_description" rows="10" placeholder="Введите описание">{task_description}</textarea></p>
+                            <p><textarea cols="40" name="editTask_description" rows="10" placeholder="Введите описание">{{task_description}}</textarea></p>
 
-                            <p><input type="text" name="editTask_workman" placeholder="Введите исполнителя" value={task_workman}></p>
+                            <p><input type="text" name="editTask_workman" placeholder="Введите исполнителя" value={{task_workman}}></p>
 
                             <p>
                                 <input type="submit" value="ОК">

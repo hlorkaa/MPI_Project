@@ -19,7 +19,11 @@ public class ManagerController {
     public String showAllTasks (Map<String, Object> model) {
         Iterable<Task> tasks = taskRepo.findAll();
         model.put("tasks", tasks);
-
+        model.put("task_name", "");
+        model.put("task_deadline", "");
+        model.put("task_status", "");
+        model.put("task_description", "");
+        model.put("task_workman", "");
         return "manager";
     }
 
@@ -34,8 +38,16 @@ public class ManagerController {
         Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
         taskRepo.save(newTask);
 
+
+        String task_name = "";
+
         Iterable<Task> tasks = taskRepo.findAll();
         model.put("tasks", tasks);
+        model.put("task_name", "");
+        model.put("task_deadline", "");
+        model.put("task_status", "");
+        model.put("task_description", "");
+        model.put("task_workman", "");
 
         return "manager";
     }
@@ -46,6 +58,11 @@ public class ManagerController {
 
         Iterable<Task> tasks = taskRepo.findAll();
         model.put("tasks", tasks);
+        model.put("task_name", "");
+        model.put("task_deadline", "");
+        model.put("task_status", "");
+        model.put("task_description", "");
+        model.put("task_workman", "");
 
         return "manager";
     }
@@ -65,7 +82,9 @@ public class ManagerController {
         String task_status = task.getStatus();
         String task_description = task.getDescription();
         String task_workman = task.getWorkman();
-
+        
+        Iterable<Task> tasks = taskRepo.findAll();
+        model.put("tasks", tasks);
         model.put("task_name", task_name);
         model.put("task_deadline", task_deadline);
         model.put("task_status", task_status);
