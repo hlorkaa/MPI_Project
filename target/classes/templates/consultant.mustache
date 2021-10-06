@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+    <title>Консультант</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1" >
+    <tbody>
+    <tr>
+        <td>Время</td>
+        <td style="text-align: right;"><input name="exitButton" type="button" value="Выход" /></td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Текущие заказы</strong></p>
+            {{#orders}}
+                <div>
+                    <b>{{id}}</b>
+                    <span>{{name}}</span>
+                    <i>{{customer}}</i>
+                    <form action="/consultant/delete" method="post">
+                        <input type="hidden" name="deleteOrder_id" value={{id}}>
+                        <button name="order_deleteButton" type="submit">Удалить</button>
+                    </form>
+                    <form action="/consultant/choose" method="post">
+                        <input type="hidden" name="chooseOrder_id" value={{id}}>
+                        <button name="order_changeButton" type="submit">Просмотр и редактирование</button>
+                    </form>
+                </div>
+            {{/orders}}
+        </td>
+        <td colspan="1" rowspan="2">
+            <p><strong>Новый заказ</strong></p>
+
+            <form action="/consultant/create" method="post">
+                <p>
+                    <input type="text" name="newOrder_name" placeholder="Введите название">
+                    <input type="text" name="newOrder_customer" placeholder="Введите заказчика">
+                </p>
+                <p>
+                    Дата: <input type="date" name="newOrder_date" placeholder="Введите дату">
+                    Дедлайн: <input type="date" name="newOrder_deadline" placeholder="Введите дедлайн">
+                </p>
+
+                <p>
+                    <input type="radio" id="orderQuality_low" name="newOrder_quality" value="Техническое"><label for="taskStatus_submitted">Техническое</label>
+                    <input type="radio" id="orderQuality_mid" name="newOrder_quality" value="Обычное" checked><label for="taskStatus_ready">Обычное</label>
+                    <input type="radio" id="orderQuality_top" name="newOrder_quality" value="Высококачественное"><label for="taskStatus_wip">Высококачественное</label>
+                </p>
+
+                <p>
+                    <input type="number" name="newOrder_quantity" placeholder="Введите количество">
+                </p>
+
+                <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания"></textarea></p>
+
+                <p>
+                    <input type="submit" value="ОК">
+                    <input type="reset" value="Отмена">
+                </p>
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p><strong>Редактировать заказ</strong></p>
+
+            <form action="/consultant/edit" method="post">
+                <p>
+                    <input type="hidden" name="order_id" value={{order_id}}>
+                    <input type="text" name="order_name" placeholder="Введите название" value={{order_name}}>
+                    <input type="text" name="order_customer" placeholder="Введите заказчика" value={{order_customer}}>
+                </p>
+
+                <p>
+                    Дата: <input type="date" name="order_date" placeholder="Введите дату" value={{order_date}}>
+                    Дедлайн: <input type="date" name="order_deadline" placeholder="Введите дедлайн" value={{order_deadline}}>
+                </p>
+
+                <p>
+                    <input type="radio" id="orderQuality_low" name="order_quality" value="Техническое"><label for="orderQuality_low">Техническое</label>
+                    <input type="radio" id="orderQuality_mid" name="order_quality" value="Обычное" checked><label for="orderQuality_mid">Обычное</label>
+                    <input type="radio" id="orderQuality_top" name="order_quality" value="Высококачественное"><label for="orderQuality_top">Высококачественное</label>
+                </p>
+
+                <p>
+                    <input type="number" name="order_quantity" placeholder="Введите количество" value={{order_quantity}}>
+                </p>
+
+                <p><textarea cols="40" name="order_description" rows="5" placeholder="Введите примечания">{{order_notes}}</textarea></p>
+
+                <p>
+                    <input type="submit" value="ОК">
+                </p>
+            </form>
+            <form  action="/consultant/cancel" method="post">
+                <p>
+                    <input type="submit" value="Отмена">
+                </p>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p>&nbsp;</p>
+</body>
+</html>
