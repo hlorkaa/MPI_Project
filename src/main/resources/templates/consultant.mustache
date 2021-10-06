@@ -16,15 +16,15 @@
             <p><strong>Текущие заказы</strong></p>
             {{#orders}}
                 <div>
-                    <b>{{id}}</b>
-                    <span>{{name}}</span>
+                    <b>{{orderID}}</b>
+                    <span>{{orderName}}</span>
                     <i>{{customer}}</i>
                     <form action="/consultant/delete" method="post">
-                        <input type="hidden" name="deleteOrder_id" value={{id}}>
+                        <input type="hidden" name="deleteOrder_id" value={{orderID}}>
                         <button name="order_deleteButton" type="submit">Удалить</button>
                     </form>
                     <form action="/consultant/choose" method="post">
-                        <input type="hidden" name="chooseOrder_id" value={{id}}>
+                        <input type="hidden" name="chooseOrder_id" value={{orderID}}>
                         <button name="order_changeButton" type="submit">Просмотр и редактирование</button>
                     </form>
                 </div>

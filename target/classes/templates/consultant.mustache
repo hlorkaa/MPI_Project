@@ -16,15 +16,15 @@
             <p><strong>Текущие заказы</strong></p>
             {{#orders}}
                 <div>
-                    <b>{{id}}</b>
-                    <span>{{name}}</span>
+                    <b>{{orderID}}</b>
+                    <span>{{orderName}}</span>
                     <i>{{customer}}</i>
                     <form action="/consultant/delete" method="post">
-                        <input type="hidden" name="deleteOrder_id" value={{id}}>
+                        <input type="hidden" name="deleteOrder_id" value={{orderID}}>
                         <button name="order_deleteButton" type="submit">Удалить</button>
                     </form>
                     <form action="/consultant/choose" method="post">
-                        <input type="hidden" name="chooseOrder_id" value={{id}}>
+                        <input type="hidden" name="chooseOrder_id" value={{orderID}}>
                         <button name="order_changeButton" type="submit">Просмотр и редактирование</button>
                     </form>
                 </div>
@@ -50,7 +50,7 @@
                 </p>
 
                 <p>
-                    <input type="number" name="newOrder_quantity" placeholder="Введите количество">
+                    <input type="number" min="1" name="newOrder_quantity" placeholder="Введите количество">
                 </p>
 
                 <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания"></textarea></p>
@@ -85,7 +85,7 @@
                 </p>
 
                 <p>
-                    <input type="number" name="order_quantity" placeholder="Введите количество" value={{order_quantity}}>
+                    <input type="number" min="1" name="order_quantity" placeholder="Введите количество" value={{order_quantity}}>
                 </p>
 
                 <p><textarea cols="40" name="order_description" rows="5" placeholder="Введите примечания">{{order_notes}}</textarea></p>
