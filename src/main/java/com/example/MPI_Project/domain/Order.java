@@ -12,6 +12,7 @@ public class Order {
     private Integer id;
 
     private String name;
+    private String customer;
     private String date;
     private String deadline;
     private String description;
@@ -21,9 +22,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(String name, String date, String deadline, String description, String quality, Double quantity) {
-        this.id = id;
+    public Order(String name, String customer, String date, String deadline, String description, String quality, Double quantity) {
+        //this.id = id;
         this.name = name;
+        this.customer = customer;
         this.date = date;
         this.deadline = deadline;
         this.description = description;
@@ -32,8 +34,9 @@ public class Order {
     }
 
     public Order(Order anotherOrder) {
-        this.id = id;
+        //this.id = id;
         this.name = anotherOrder.name;
+        this.customer = anotherOrder.customer;
         this.date = anotherOrder.date;
         this.deadline = anotherOrder.deadline;
         this.description = anotherOrder.description;
@@ -55,6 +58,14 @@ public class Order {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     public String getDate() {

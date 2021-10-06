@@ -21,7 +21,7 @@ public class Task {
     }
 
     public Task(String name, String deadline, String status, String description, String workman) {
-        this.id = id;
+        //this.id = id;
         this.name = name;
         this.deadline = deadline;
         this.status = status;
@@ -30,7 +30,7 @@ public class Task {
     }
 
     public Task(Task anotherTask) {
-        this.id = id;
+        //this.id = id;
         this.name = anotherTask.name;
         this.deadline = anotherTask.deadline;
         this.status = anotherTask.status;
