@@ -50,7 +50,7 @@
                 </p>
 
                 <p>
-                    <input type="number" name="newOrder_quantity" placeholder="Введите количество">
+                    <input type="number" min="1" name="newOrder_quantity" placeholder="Введите количество">
                 </p>
 
                 <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания"></textarea></p>
@@ -85,7 +85,7 @@
                 </p>
 
                 <p>
-                    <input type="number" name="order_quantity" placeholder="Введите количество" value={{order_quantity}}>
+                    <input type="number" min="1" name="order_quantity" placeholder="Введите количество" value={{order_quantity}}>
                 </p>
 
                 <p><textarea cols="40" name="order_description" rows="5" placeholder="Введите примечания">{{order_notes}}</textarea></p>
@@ -94,16 +94,16 @@
                     <input type="submit" value="ОК">
                 </p>
             </form>
-            <form  action="/consultant/cancel" method="post">
-                <p>
-                    <input type="submit" value="Отмена">
-                </p>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                        <form  action="/consultant/cancel" method="post">
+                             <p>
+                                <input type="submit" value="Отмена">
+                            </p>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-<p>&nbsp;</p>
-</body>
+        <p>&nbsp;</p>
+    </body>
 </html>

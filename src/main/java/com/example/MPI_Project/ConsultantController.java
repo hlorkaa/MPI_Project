@@ -1,6 +1,6 @@
 package com.example.MPI_Project;
 
-import com.example.MPI_Project.domain.Order;
+import com.example.MPI_Project.domain.OrderCard;
 import com.example.MPI_Project.repos.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ public class ConsultantController {
     private OrderRepo orderRepo;
 
     public void putVariables(Map<String, Object> model, Integer id, String name, String customer, String date, String deadline, String quality, Integer quantity, String notes) {
-        Iterable<Order> orders = orderRepo.findAll();
+        Iterable<OrderCard> orders = orderRepo.findAll();
         model.put("orders", orders);
         model.put("order_id", id);
         model.put("order_name", name);
@@ -27,7 +27,7 @@ public class ConsultantController {
         model.put("order_notes", notes);
     }
 
-    public Order findOrder(Integer id) { return orderRepo.findById(id).orElse(new Order()); }
+    public OrderCard findOrder(Integer id) { return orderRepo.findById(id).orElse(new OrderCard()); }
 
     @GetMapping
     public String start(Map<String, Object> model) {
@@ -39,22 +39,22 @@ public class ConsultantController {
 
     @PostMapping("/create")
     public String createNewOrder (
-                                 @RequestParam String newOrder_name,
-                                 @RequestParam String newOrder_customer,
-                                 @RequestParam String newOrder_date,
-                                 @RequestParam String newOrder_deadline,
-                                 @RequestParam String newOrder_quality,
-                                 @RequestParam(defaultValue = "0") Integer newOrder_quantity,
-                                 @RequestParam(defaultValue = "") String newOrder_notes,
-                                 Map<String, Object> model
-                                ) {
-        Order newOrder = new Order(newOrder_name, newOrder_customer, newOrder_date, newOrder_deadline, newOrder_quality, newOrder_quantity, newOrder_notes);
+                                  @RequestParam String newOrder_name,
+                                  @RequestParam String newOrder_customer,
+                                  @RequestParam String newOrder_date,
+                                  @RequestParam String newOrder_deadline,
+                                  @RequestParam String newOrder_quality,
+                                  @RequestParam Integer newOrder_quantity,
+                                  @RequestParam(defaultValue = "") String newOrder_notes,
+                                  Map<String, Object> model
+                                 ) {
+        OrderCard newOrderCard = new OrderCard(newOrder_name, newOrder_customer, newOrder_date, newOrder_deadline, newOrder_quality, newOrder_quantity, newOrder_notes);
+
+        if (!newOrder_name.equals("") && !newOrder_customer.equals("") && !newOrder_date.equals("") && !newOrder_deadline.equals("") && !newOrder_quality.equals("") && newOrder_quantity != 0) {
+            orderRepo.save(newOrderCard);
+        }
 
         putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
-
-        if (!newOrder_name.equals("") && !newOrder_customer.equals("") && !newOrder_date.equals("") && !newOrder_deadline.equals("") && !newOrder_quality.equals("") && !newOrder_quantity.equals("0")) {
-            orderRepo.save(newOrder);
-        }
 
         return "consultant";
     }
@@ -73,14 +73,14 @@ public class ConsultantController {
                                @RequestParam Integer chooseOrder_id,
                                Map<String, Object> model
                               ) {
-        Order order = findOrder(chooseOrder_id);
-        String order_name = order.getName();
-        String order_customer = order.getCustomer();
-        String order_date = order.getDate();
-        String order_deadline = order.getDeadline();
-        String order_quality = order.getQuality();
-        Integer order_quantity = order.getQuantity();
-        String order_notes = order.getNotes();
+        OrderCard orderCard = findOrder(chooseOrder_id);
+        String order_name = orderCard.getOrderName();
+        String order_customer = orderCard.getCustomer();
+        String order_date = orderCard.getDate();
+        String order_deadline = orderCard.getOrderDeadline();
+        String order_quality = orderCard.getQuality();
+        Integer order_quantity = orderCard.getQuantity();
+        String order_notes = orderCard.getNotes();
 
         putVariables(model, chooseOrder_id,  order_name,  order_customer,  order_date,  order_deadline,  order_quality, order_quantity, order_notes);
 
@@ -95,22 +95,22 @@ public class ConsultantController {
                              @RequestParam String order_date,
                              @RequestParam String order_deadline,
                              @RequestParam String order_quality,
-                             @RequestParam(defaultValue = "0") Integer order_quantity,
+                             @RequestParam(defaultValue = "") Integer order_quantity,
                              @RequestParam(defaultValue = "") String order_notes,
                              Map<String, Object> model
                             ) {
         if (order_id != 0 && !order_name.equals("") && !order_customer.equals("") && !order_date.equals("") && !order_deadline.equals("") && !order_quality.equals("") && !order_quantity.equals("0")) {
-            Order order = findOrder(order_id);
+            OrderCard orderCard = findOrder(order_id);
 
-            order.setName(order_name);
-            order.setCustomer(order_customer);
-            order.setDate(order_date);
-            order.setDeadline(order_deadline);
-            order.setQuality(order_quality);
-            order.setQuantity(order_quantity);
-            order.setNotes(order_notes);
+            orderCard.setOrderName(order_name);
+            orderCard.setCustomer(order_customer);
+            orderCard.setDate(order_date);
+            orderCard.setOrderDeadline(order_deadline);
+            orderCard.setQuality(order_quality);
+            orderCard.setQuantity(order_quantity);
+            orderCard.setNotes(order_notes);
 
-            orderRepo.save(order);
+            orderRepo.save(orderCard);
         }
 
         putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
