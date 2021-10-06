@@ -45,9 +45,14 @@ public class ManagerController {
                                  @RequestParam String newTask_workman,
                                  Map<String, Object> model) {
         Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
-        taskRepo.save(newTask);
 
         putVariables(model, 0,  "",  "",  "",  "",  "");
+
+        if (!newTask_name.equals("") && !newTask_deadline.equals("") && !newTask_status.equals("") && !newTask_description.equals("") && !newTask_workman.equals("")) {
+            taskRepo.save(newTask);
+
+        }
+
         return "manager";
     }
 
@@ -81,7 +86,7 @@ public class ManagerController {
 
     @PostMapping("/edit")
     public String editTask (
-            @RequestParam Integer task_id,
+            @RequestParam(defaultValue = "0") Integer task_id,
             @RequestParam String task_name,
             @RequestParam String task_deadline,
             @RequestParam String task_status,
@@ -89,17 +94,19 @@ public class ManagerController {
             @RequestParam String task_workman,
             Map<String, Object> model) {
 
-        Task task = findTask(task_id);
-        task.setName(task_name);
-        task.setDeadline(task_deadline);
-        task.setStatus(task_status);
-        task.setDescription(task_description);
-        task.setWorkman(task_workman);
-        if (task_id != 0) {
+        putVariables(model, 0,  "",  "",  "",  "",  "");
+
+        if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
+            Task task = findTask(task_id);
+            task.setName(task_name);
+            task.setDeadline(task_deadline);
+            task.setStatus(task_status);
+            task.setDescription(task_description);
+            task.setWorkman(task_workman);
+
             taskRepo.save(task);
         }
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
 
         return "manager";
     }

@@ -19,6 +19,7 @@ public class WorkmanController {
     private TaskRepo taskRepo;
 
     public void putVariables(String workman_name, Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
+
         Iterable<Task> tasks = taskRepo.findByWorkman(workman_name);
         model.put("tasks", tasks);
         model.put("task_id", id);
@@ -77,7 +78,7 @@ public class WorkmanController {
         task.setStatus(task_status);
         task.setDescription(task_description);
         task.setWorkman(task_workman);
-        if (task_id != 0) {
+        if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
             taskRepo.save(task);
         }
 
