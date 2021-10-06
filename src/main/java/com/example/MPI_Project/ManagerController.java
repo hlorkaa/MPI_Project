@@ -31,8 +31,8 @@ public class ManagerController {
 
     @GetMapping
     public String start(Map<String, Object> model) {
-
         putVariables(model, 0,  "",  "",  "",  "",  "");
+
         return "manager";
     }
 
@@ -43,15 +43,15 @@ public class ManagerController {
                                  @RequestParam String newTask_status,
                                  @RequestParam String newTask_description,
                                  @RequestParam String newTask_workman,
-                                 Map<String, Object> model) {
+                                 Map<String, Object> model
+                                ) {
         Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
-
-        putVariables(model, 0,  "",  "",  "",  "",  "");
 
         if (!newTask_name.equals("") && !newTask_deadline.equals("") && !newTask_status.equals("") && !newTask_description.equals("") && !newTask_workman.equals("")) {
             taskRepo.save(newTask);
-
         }
+
+        putVariables(model, 0,  "",  "",  "",  "",  "");
 
         return "manager";
     }
@@ -69,9 +69,9 @@ public class ManagerController {
 
     @PostMapping("/choose")
     public String chooseTask (
-            @RequestParam Integer chooseTask_id,
-                    Map<String, Object> model) {
-
+                              @RequestParam Integer chooseTask_id,
+                              Map<String, Object> model
+                             ) {
         Task task = findTask(chooseTask_id);
         String task_name = task.getName();
         String task_deadline = task.getDeadline();
@@ -86,15 +86,14 @@ public class ManagerController {
 
     @PostMapping("/edit")
     public String editTask (
-            @RequestParam(defaultValue = "0") Integer task_id,
-            @RequestParam String task_name,
-            @RequestParam String task_deadline,
-            @RequestParam String task_status,
-            @RequestParam String task_description,
-            @RequestParam String task_workman,
-            Map<String, Object> model) {
-
-        putVariables(model, 0,  "",  "",  "",  "",  "");
+                            @RequestParam(defaultValue = "0") Integer task_id,
+                            @RequestParam String task_name,
+                            @RequestParam String task_deadline,
+                            @RequestParam String task_status,
+                            @RequestParam String task_description,
+                            @RequestParam String task_workman,
+                            Map<String, Object> model
+                           ) {
 
         if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
             Task task = findTask(task_id);
@@ -107,6 +106,7 @@ public class ManagerController {
             taskRepo.save(task);
         }
 
+        putVariables(model, 0,  "",  "",  "",  "",  "");
 
         return "manager";
     }

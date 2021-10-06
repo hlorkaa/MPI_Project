@@ -15,7 +15,7 @@ public class Finances {
     private Double amount;
     private String type;
 
-    public Finances(){
+    public Finances() {
     }
 
     public Finances(String date, Double amount, String type) {

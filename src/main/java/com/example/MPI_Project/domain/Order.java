@@ -15,22 +15,22 @@ public class Order {
     private String customer;
     private String date;
     private String deadline;
-    private String description;
     private String quality;
-    private Double quantity;
+    private Integer quantity;
+    private String notes;
 
     public Order() {
     }
 
-    public Order(String name, String customer, String date, String deadline, String description, String quality, Double quantity) {
+    public Order(String name, String customer, String date, String deadline, String quality, Integer quantity, String notes) {
         //this.id = id;
         this.name = name;
         this.customer = customer;
         this.date = date;
         this.deadline = deadline;
-        this.description = description;
         this.quality = quality;
         this.quantity = quantity;
+        this.notes = notes;
     }
 
     public Order(Order anotherOrder) {
@@ -39,9 +39,9 @@ public class Order {
         this.customer = anotherOrder.customer;
         this.date = anotherOrder.date;
         this.deadline = anotherOrder.deadline;
-        this.description = anotherOrder.description;
         this.quality = anotherOrder.quality;
         this.quantity = anotherOrder.quantity;
+        this.notes = anotherOrder.notes;
     }
 
     public Integer getId() {
@@ -84,14 +84,6 @@ public class Order {
         this.deadline = deadline;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getQuality() {
         return quality;
     }
@@ -100,11 +92,19 @@ public class Order {
         this.quality = quality;
     }
 
-    public Double getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }
