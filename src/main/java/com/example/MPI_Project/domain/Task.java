@@ -30,7 +30,7 @@ public class Task {
     }
 
     public Task(Task anotherTask) {
-        this.id = anotherTask.id;
+        this.id = id;
         this.name = anotherTask.name;
         this.deadline = anotherTask.deadline;
         this.status = anotherTask.status;
