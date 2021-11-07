@@ -9,57 +9,55 @@ import javax.persistence.Id;
 public class OrderCard {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer orderID;
+    private Integer id;
 
-    private String orderName;
+    private String ordername;
     private String customer;
-    private String date;
-    private String orderDeadline;
+    private String orderdate;
+    private String orderdeadline;
     private String quality;
     private Integer quantity;
     private String notes;
 
+    public OrderCard(String name, String customer, String date, String deadline, String quality, Integer quantity, String notes) {
+        //this.id = id;
+        this.ordername = name;
+        this.customer = customer;
+        this.orderdate = date;
+        this.orderdeadline = deadline;
+        this.notes = notes;
+        this.quality = quality;
+        this.quantity = quantity;
+    }
+
     public OrderCard() {
     }
 
-    public OrderCard(String name, String customer, String date, String deadline, String quality, Integer quantity, String notes) {
+    public OrderCard(OrderCard anotherOrder) {
         //this.id = id;
-        this.orderName = name;
-        this.customer = customer;
-        this.date = date;
-        this.orderDeadline = deadline;
-        this.quality = quality;
-        this.quantity = quantity;
-        this.notes = notes;
+        this.ordername = anotherOrder.ordername;
+        this.customer = anotherOrder.customer;
+        this.orderdate = anotherOrder.orderdate;
+        this.orderdeadline = anotherOrder.orderdeadline;
+        this.notes = anotherOrder.notes;
+        this.quality = anotherOrder.quality;
+        this.quantity = anotherOrder.quantity;
     }
 
-    public OrderCard(OrderCard anotherOrderCard) {
-        //this.id = id;
-        this.orderName = anotherOrderCard.orderName;
-        this.customer = anotherOrderCard.customer;
-        this.date = anotherOrderCard.date;
-        this.orderDeadline = anotherOrderCard.orderDeadline;
-        this.quality = anotherOrderCard.quality;
-        this.quantity = anotherOrderCard.quantity;
-        this.notes = anotherOrderCard.notes;
+    public Integer getId() {
+        return id;
     }
 
-
-
-    public Integer getOrderID() {
-        return orderID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setOrderID(Integer id) {
-        this.orderID = id;
+    public String getOrdername() {
+        return ordername;
     }
 
-    public String getOrderName() {
-        return orderName;
-    }
-
-    public void setOrderName(String name) {
-        this.orderName = name;
+    public void setOrdername(String name) {
+        this.ordername = name;
     }
 
     public String getCustomer() {
@@ -71,19 +69,27 @@ public class OrderCard {
     }
 
     public String getDate() {
-        return date;
+        return orderdate;
     }
 
     public void setDate(String date) {
-        this.orderName = date;
+        this.ordername = date;
     }
 
-    public String getOrderDeadline() {
-        return orderDeadline;
+    public String getOrderdeadline() {
+        return orderdeadline;
     }
 
-    public void setOrderDeadline(String deadline) {
-        this.orderDeadline = deadline;
+    public void setOrderdeadline(String deadline) {
+        this.orderdeadline = deadline;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public String getQuality() {
@@ -100,13 +106,5 @@ public class OrderCard {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 }

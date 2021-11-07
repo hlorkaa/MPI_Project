@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+            margin: 10px;
+            padding: 12px 15px;
+        }
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+            margin: 10px;
+        }
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+            vertical-align: top;
+            background-color: #f3f3f3;
+        }
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+    </style>
+</head>
+<body>
+<table class="styled-table">
+    <tr>
+        <form action="/main/acc" method="post">
+            <button name="task_accButton" type="submit">Бухгалтер</button>
+        </form>
+    </tr>
+    <tr>
+        <form action="/main/cons" method="post">
+            <button name="task_conButton" type="submit">Консультант</button>
+        </form>
+    </tr>
+    <tr>
+        <form action="/main/manag" method="post">
+            <button name="task_managButton" type="submit">Менеджер</button>
+        </form>
+    </tr>
+    <tr>
+        <form action="/main/worker" method="post">
+            <button name="task_workButton" type="submit">Сотрудник</button>
+        </form>
+    </tr>
+</table>
+</body>
+</html>

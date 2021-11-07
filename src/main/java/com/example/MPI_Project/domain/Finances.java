@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
 public class Finances {
     @Id
@@ -15,7 +16,7 @@ public class Finances {
     private Double amount;
     private String type;
 
-    public Finances() {
+    public Finances(){
     }
 
     public Finances(String date, Double amount, String type) {
@@ -63,6 +64,5 @@ public class Finances {
     public void setType(String type) {
         this.type = type;
     }
+
 }
-
-

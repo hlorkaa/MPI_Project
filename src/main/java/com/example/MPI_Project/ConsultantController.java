@@ -15,7 +15,6 @@ import java.util.Map;
 public class ConsultantController {
     @Autowired
     private OrderRepo orderRepo;
-
     @Autowired
     private FinancesRepo financesRepo;
 
@@ -60,6 +59,9 @@ public class ConsultantController {
     }
 
     public void putVariables(Map<String, Object> model, Integer id, String name, String customer, String date, String deadline, String quality, Integer quantity, String notes) {
+        Integer flag;
+        if (orderRepo == null)
+            flag = 0;
         Iterable<OrderCard> orders = orderRepo.findAll();
         model.put("orders", orders);
         model.put("order_id", id);
@@ -72,107 +74,108 @@ public class ConsultantController {
         model.put("order_notes", notes);
     }
 
-    public OrderCard findOrder(Integer id) { return orderRepo.findById(id).orElse(new OrderCard()); }
+    public OrderCard findOrder(Integer id) {
+        return orderRepo.findById(id).orElse(new OrderCard());
+    }
 
     @GetMapping
     public String start(Map<String, Object> model) {
 
-        putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
+        putVariables(model, 0, "", "", "", "", "", 0, "");
 
-        return "consultant";
+        return "consultant_temp";
     }
 
     @PostMapping("/create")
-    public String createNewOrder (
-                                  @RequestParam String newOrder_name,
-                                  @RequestParam String newOrder_customer,
-                                  @RequestParam String newOrder_date,
-                                  @RequestParam String newOrder_deadline,
-                                  @RequestParam String newOrder_quality,
-                                  @RequestParam Integer newOrder_quantity,
-                                  @RequestParam(defaultValue = "") String newOrder_notes,
-                                  Map<String, Object> model
-                                 ) {
-        OrderCard newOrderCard = new OrderCard(newOrder_name, newOrder_customer, newOrder_date, newOrder_deadline, newOrder_quality, newOrder_quantity, newOrder_notes);
+    public String createNewOrder(
+            @RequestParam String newOrder_name,
+            @RequestParam String newOrder_customer,
+            @RequestParam String newOrder_date,
+            @RequestParam String newOrder_deadline,
+            @RequestParam String newOrder_quality,
+            @RequestParam(defaultValue = "0") Integer newOrder_quantity,
+            @RequestParam(defaultValue = "") String newOrder_notes,
+            Map<String, Object> model
+    ) {
+        OrderCard newOrder = new OrderCard(newOrder_name, newOrder_customer, newOrder_date, newOrder_deadline, newOrder_quality, newOrder_quantity, newOrder_notes);
 
-        if (!newOrder_name.equals("") && !newOrder_customer.equals("") && !newOrder_date.equals("") && !newOrder_deadline.equals("") && !newOrder_quality.equals("") && newOrder_quantity != 0) {
-            orderRepo.save(newOrderCard);
-            pushToFinances(newOrder_date, "None", 0, newOrder_quality, newOrder_quantity);
+
+        if (!newOrder_name.equals("") && !newOrder_customer.equals("") && !newOrder_date.equals("") && !newOrder_deadline.equals("") && !newOrder_quality.equals("") && !newOrder_quantity.equals("0")) {
+            orderRepo.save(newOrder);
         }
+        pushToFinances(newOrder_date, "None", 0, newOrder_quality, newOrder_quantity);
+        putVariables(model, 0, "", "", "", "", "", 0, "");
 
-        putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
-
-        return "consultant";
+        return "consultant_temp";
     }
 
     @PostMapping("/delete")
-    public String deleteOrder (@RequestParam Integer deleteOrder_id, Map<String, Object> model) {
+    public String deleteOrder(@RequestParam Integer deleteOrder_id, Map<String, Object> model) {
         OrderCard deletedOrder = findOrder(deleteOrder_id);
         pushToFinances(deletedOrder.getDate(), deletedOrder.getQuality(), deletedOrder.getQuantity(), "None", 0);
         orderRepo.deleteById(deleteOrder_id);
 
-        putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
+        putVariables(model, 0, "", "", "", "", "", 0, "");
 
-        return "consultant";
+        return "consultant_temp";
     }
 
     @PostMapping("/choose")
-    public String chooseOrder (
-                               @RequestParam Integer chooseOrder_id,
-                               Map<String, Object> model
-                              ) {
-        OrderCard orderCard = findOrder(chooseOrder_id);
-        String order_name = orderCard.getOrderName();
-        String order_customer = orderCard.getCustomer();
-        String order_date = orderCard.getDate();
-        String order_deadline = orderCard.getOrderDeadline();
-        String order_quality = orderCard.getQuality();
-        Integer order_quantity = orderCard.getQuantity();
-        String order_notes = orderCard.getNotes();
+    public String chooseOrder(
+            @RequestParam Integer chooseOrder_id,
+            Map<String, Object> model
+    ) {
+        OrderCard order = findOrder(chooseOrder_id);
+        String order_name = order.getOrdername();
+        String order_customer = order.getCustomer();
+        String order_date = order.getDate();
+        String order_deadline = order.getOrderdeadline();
+        String order_quality = order.getQuality();
+        Integer order_quantity = order.getQuantity();
+        String order_notes = order.getNotes();
 
-        putVariables(model, chooseOrder_id,  order_name,  order_customer,  order_date,  order_deadline,  order_quality, order_quantity, order_notes);
+        putVariables(model, chooseOrder_id, order_name, order_customer, order_date, order_deadline, order_quality, order_quantity, order_notes);
 
-        return "consultant";
+        return "consultant_temp";
     }
 
     @PostMapping("/edit")
-    public String editOrder (
-                             @RequestParam(defaultValue = "0") Integer order_id,
-                             @RequestParam String order_name,
-                             @RequestParam String order_customer,
-                             @RequestParam String order_date,
-                             @RequestParam String order_deadline,
-                             @RequestParam String order_quality,
-                             @RequestParam(defaultValue = "") Integer order_quantity,
-                             @RequestParam(defaultValue = "") String order_notes,
-                             Map<String, Object> model
-                            ) {
+    public String editOrder(
+            @RequestParam(defaultValue = "0") Integer order_id,
+            @RequestParam String order_name,
+            @RequestParam String order_customer,
+            @RequestParam String order_date,
+            @RequestParam String order_deadline,
+            @RequestParam String order_quality,
+            @RequestParam(defaultValue = "0") Integer order_quantity,
+            @RequestParam(defaultValue = "") String order_notes,
+            Map<String, Object> model
+    ) {
         if (order_id != 0 && !order_name.equals("") && !order_customer.equals("") && !order_date.equals("") && !order_deadline.equals("") && !order_quality.equals("") && !order_quantity.equals("0")) {
-            OrderCard orderCard = findOrder(order_id);
+            OrderCard order = findOrder(order_id);
 
-            pushToFinances(order_date, orderCard.getQuality(), orderCard.getQuantity(), order_quality, order_quantity);
+            pushToFinances(order_date, order.getQuality(), order.getQuantity(), order_quality, order_quantity);
 
-            orderCard.setOrderName(order_name);
-            orderCard.setCustomer(order_customer);
-            orderCard.setDate(order_date);
-            orderCard.setOrderDeadline(order_deadline);
-            orderCard.setQuality(order_quality);
-            orderCard.setQuantity(order_quantity);
-            orderCard.setNotes(order_notes);
+            order.setOrdername(order_name);
+            order.setCustomer(order_customer);
+            order.setDate(order_date);
+            order.setOrderdeadline(order_deadline);
+            order.setQuality(order_quality);
+            order.setQuantity(order_quantity);
+            order.setNotes(order_notes);
 
-            orderRepo.save(orderCard);
+            orderRepo.save(order);
         }
 
-        putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
+        putVariables(model, 0, "", "", "", "", "", 0, "");
 
-        return "consultant";
+        return "consultant_temp";
     }
 
     @PostMapping("/cancel")
-    public String cancelOrderEdition (Map<String, Object> model) {
-        putVariables(model, 0,  "",  "",  "",  "",  "", 0, "");
+    public String cancelOrderEdition(Map<String, Object> model) {
+        putVariables(model, 0, "", "", "", "", "", 0, "");
 
-        return "consultant";
+        return "consultant_temp";
     }
-
 }

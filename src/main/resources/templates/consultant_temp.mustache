@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Консультант</title>
-
     <style>
         .styled-table {
             border-collapse: collapse;
@@ -40,7 +39,7 @@
 </head>
 
 <body>
-<table class="styled-table">
+<table border="1" cellpadding="1" cellspacing="1" class="styled-table">
     <tbody>
     <tr>
         <td>Время</td>
@@ -51,15 +50,15 @@
             <p><strong>Текущие заказы</strong></p>
             {{#orders}}
                 <div>
-                    <b>{{orderID}}</b>
-                    <span>{{orderName}}</span>
+                    <b>{{id}}</b>
+                    <span>{{name}}</span>
                     <i>{{customer}}</i>
                     <form action="/consultant/delete" method="post">
-                        <input type="hidden" name="deleteOrder_id" value={{orderID}}>
+                        <input type="hidden" name="deleteOrder_id" value={{id}}>
                         <button name="order_deleteButton" type="submit">Удалить</button>
                     </form>
                     <form action="/consultant/choose" method="post">
-                        <input type="hidden" name="chooseOrder_id" value={{orderID}}>
+                        <input type="hidden" name="chooseOrder_id" value={{id}}>
                         <button name="order_changeButton" type="submit">Просмотр и редактирование</button>
                     </form>
                 </div>
@@ -129,16 +128,16 @@
                     <input type="submit" value="ОК">
                 </p>
             </form>
-                        <form  action="/consultant/cancel" method="post">
-                             <p>
-                                <input type="submit" value="Отмена">
-                            </p>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <form  action="/consultant/cancel" method="post">
+                <p>
+                    <input type="submit" value="Отмена">
+                </p>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-        <p>&nbsp;</p>
-    </body>
+<p>&nbsp;</p>
+</body>
 </html>

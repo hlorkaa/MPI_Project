@@ -31,29 +31,29 @@ public class ManagerController {
 
     @GetMapping
     public String start(Map<String, Object> model) {
-        putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        putVariables(model, 0,  "",  "",  "",  "",  "");
+        return "manager_temp";
     }
 
     @PostMapping("/create")
     public String createNewTask (
-                                 @RequestParam String newTask_name,
-                                 @RequestParam String newTask_deadline,
-                                 @RequestParam String newTask_status,
-                                 @RequestParam String newTask_description,
-                                 @RequestParam String newTask_workman,
-                                 Map<String, Object> model
-                                ) {
+            @RequestParam String newTask_name,
+            @RequestParam String newTask_deadline,
+            @RequestParam String newTask_status,
+            @RequestParam String newTask_description,
+            @RequestParam String newTask_workman,
+            Map<String, Object> model) {
         Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
-
-        if (!newTask_name.equals("") && !newTask_deadline.equals("") && !newTask_status.equals("") && !newTask_description.equals("") && !newTask_workman.equals("")) {
-            taskRepo.save(newTask);
-        }
 
         putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        if (!newTask_name.equals("") && !newTask_deadline.equals("") && !newTask_status.equals("") && !newTask_description.equals("") && !newTask_workman.equals("")) {
+            taskRepo.save(newTask);
+
+        }
+        putVariables(model, 0, "", "", "", "", "");
+        return "manager_temp";
     }
 
     @PostMapping("/delete")
@@ -62,16 +62,16 @@ public class ManagerController {
 
         putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        return "manager_temp";
     }
 
 
 
     @PostMapping("/choose")
     public String chooseTask (
-                              @RequestParam Integer chooseTask_id,
-                              Map<String, Object> model
-                             ) {
+            @RequestParam Integer chooseTask_id,
+            Map<String, Object> model) {
+
         Task task = findTask(chooseTask_id);
         String task_name = task.getName();
         String task_deadline = task.getDeadline();
@@ -81,19 +81,19 @@ public class ManagerController {
 
         putVariables(model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
 
-        return "manager";
+        return "manager_temp";
     }
 
     @PostMapping("/edit")
     public String editTask (
-                            @RequestParam(defaultValue = "0") Integer task_id,
-                            @RequestParam String task_name,
-                            @RequestParam String task_deadline,
-                            @RequestParam String task_status,
-                            @RequestParam String task_description,
-                            @RequestParam String task_workman,
-                            Map<String, Object> model
-                           ) {
+            @RequestParam(defaultValue = "0") Integer task_id,
+            @RequestParam String task_name,
+            @RequestParam String task_deadline,
+            @RequestParam String task_status,
+            @RequestParam String task_description,
+            @RequestParam String task_workman,
+            Map<String, Object> model) {
+
 
         if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
             Task task = findTask(task_id);
@@ -108,14 +108,14 @@ public class ManagerController {
 
         putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        return "manager_temp";
     }
 
     @PostMapping("/cancel")
     public String cancelTaskEdition (Map<String, Object> model) {
         putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager";
+        return "manager_temp";
     }
 }
 

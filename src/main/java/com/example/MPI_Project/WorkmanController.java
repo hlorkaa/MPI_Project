@@ -1,4 +1,3 @@
-
 package com.example.MPI_Project;
 
 import com.example.MPI_Project.domain.Task;
@@ -19,6 +18,7 @@ public class WorkmanController {
     private TaskRepo taskRepo;
 
     public void putVariables(String workman_name, Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
+
         Iterable<Task> tasks = taskRepo.findByWorkman(workman_name);
         model.put("tasks", tasks);
         model.put("task_id", id);
@@ -35,20 +35,19 @@ public class WorkmanController {
 
     @GetMapping
     public String start (
-                         @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
-                         Map<String, Object> model
-                        ) {
-        putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
+            Map<String, Object> model) {
 
-        return "workman";
+        putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
+        return "workman_temp";
     }
 
     @PostMapping("/choose")
     public String chooseTask (
-                              @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
-                              @RequestParam Integer chooseTask_id,
-                              Map<String, Object> model
-                             ) {
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
+            @RequestParam Integer chooseTask_id,
+            Map<String, Object> model) {
+
         Task task = findTask(chooseTask_id);
         String task_name = task.getName();
         String task_deadline = task.getDeadline();
@@ -58,20 +57,20 @@ public class WorkmanController {
 
         putVariables(workman_name, model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
 
-        return "workman";
+        return "workman_temp";
     }
 
     @PostMapping("/edit")
     public String editTask (
-                            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
-                            @RequestParam Integer task_id,
-                            @RequestParam String task_name,
-                            @RequestParam String task_deadline,
-                            @RequestParam String task_status,
-                            @RequestParam String task_description,
-                            @RequestParam String task_workman,
-                            Map<String, Object> model
-                           ) {
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
+            @RequestParam Integer task_id,
+            @RequestParam String task_name,
+            @RequestParam String task_deadline,
+            @RequestParam String task_status,
+            @RequestParam String task_description,
+            @RequestParam String task_workman,
+            Map<String, Object> model) {
+
         if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
             Task task = findTask(task_id);
             task.setName(task_name);
@@ -79,22 +78,20 @@ public class WorkmanController {
             task.setStatus(task_status);
             task.setDescription(task_description);
             task.setWorkman(task_workman);
-
             taskRepo.save(task);
         }
 
         putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
 
-        return "workman";
+        return "workman_temp";
     }
 
     @PostMapping("/cancel")
     public String cancelTaskEdition (
-                                     @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
-                                     Map<String, Object> model
-                                    ) {
+            @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
+            Map<String, Object> model) {
         putVariables(workman_name, model, 0,  "",  "",  "",  "",  "");
 
-        return "workman";
+        return "workman_temp";
     }
 }
