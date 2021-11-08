@@ -21,7 +21,6 @@ public class ConsultantController {
     public void pushToFinances(String date, String oldQuality, Integer oldQuantity, String newQuality, Integer newQuantity) {
         Double amount;
         String type;
-
         Integer oldQualityCoefficient = 0;
         switch (oldQuality){
             case "Техническое":
