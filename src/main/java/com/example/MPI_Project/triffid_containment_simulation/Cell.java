@@ -1,6 +1,5 @@
 package com.example.MPI_Project.triffid_containment_simulation;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Cell {
@@ -40,22 +39,30 @@ public class Cell {
 
         this.space[randomX][randomY] = 1; // drop triffid on the random place inside the cell
         triffidPosition[0] = randomX; triffidPosition[1] = randomY; // saving his position to avoid searching for it on each update
+        /*System.out.println(
+                "Triffid spawned at [" + Integer.toString(randomX) + ":" + Integer.toString(randomY) + "]"
+        );*/
     }
 
     public void update() {
+        //System.out.println("Update:");
         if (!triffidEscaped) {
             Random random = new Random();
             int random_chance = random.nextInt(10);
             if (!doorIsOpen) { // if door is closed, open it with 10% chance
                 if (random_chance < 1) {
                     doorIsOpen = true;
-                    space[0][size - (int)(size/2)] = 0;
+                    space[0][2] = 0;
+
+                    //System.out.println("Door at [0:2] opened!");
                 }
             }
             else {
                 if (random_chance < 3) { // if door is opened, close it with 30% chance
                     doorIsOpen = false;
-                    space[0][size - (int)(size/2)] = 0;
+                    space[0][size - (int)(size/2)] = 2;
+
+                    //System.out.println("Door at [0:2] closed!");
                 }
             }
 
@@ -70,12 +77,13 @@ public class Cell {
 
         if (currentX == 0) {
             triffidEscaped = true;
+            //System.out.println("Triffid escaped!");
             return;
         }
 
         Random random = new Random();
         int chooseAxis = random.nextInt(2); // up-down or left-right
-        int direction = random.nextInt(3) - 3; // -1, 0, 1
+        int direction = random.nextInt(3) - 1; // -1, 0, 1
 
         if (chooseAxis == 0) {                          // moving in x-axis
             if (space[currentX + direction][currentY] == 2) { // if wall
@@ -83,12 +91,24 @@ public class Cell {
             }
             space[currentX][currentY] = 0; // triffid went away from previous position
             space[currentX + direction][currentY] = 1;
+            triffidPosition[0] = currentX + direction;
+            triffidPosition[1] = currentY;
+            /*System.out.println(
+                                "Triffid moved from [" + Integer.toString(currentX) + ":" + Integer.toString(currentY) +
+                                "] to [" + Integer.toString(currentX + direction) + ":" + Integer.toString(currentY) + "]"
+            );*/
         } else {                                        // moving in y-axis
             if (space[currentX][currentY + direction] != 0) { // if wall
                 return;
             }
             space[currentX][currentY] = 0; // triffid went away from previous position
             space[currentX][currentY + direction] = 1;
+            triffidPosition[0] = currentX;
+            triffidPosition[1] = currentY + direction;
+            /*System.out.println(
+                    "Triffid moved from [" + Integer.toString(currentX) + ":" + Integer.toString(currentY) +
+                            "] to [" + Integer.toString(currentX) + ":" + Integer.toString(currentY + direction) + "]"
+            );*/
         }
     }
 
