@@ -39,6 +39,36 @@
     </style>
 </head>
 <body>
-    <img src="{{ImageName}}">
+    <table border="1" cellpadding="1" cellspacing="1" class="styled-table">
+        <tbody>
+            <tr>
+                <td>Время</td>
+                <td style="text-align: right;"><input name="exitButton" type="button" value="Выход" /></td>
+            </tr>
+            <tr>
+                <td width=350>
+                    <p><strong>Состояние клеток</strong></p>
+                    <p>Клетка 1: {{condition_1}}</p>
+                    <p>Клетка 2: {{condition_2}}</p>
+                    <p>Клетка 3: {{condition_3}}</p>
+                    <p>Клетка 4: {{condition_4}}</p>
+                    <p>Клетка 5: {{condition_5}}</p>
+                </td>
+                <td>
+                    <p>
+                        <form  action="/security/next" method="post">
+                            <input type="submit" value="->">
+                        </form>
+                        <form  action="/security/prev" method="post">
+                            <input type="submit" value="<-">
+                        </form>
+                    </p>
+                    <p><img src="{{ImageName}}" height="300" width="300"></p>
+                    <p>Камера в клетке {{camera_number}}</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
 </body>
 </html>

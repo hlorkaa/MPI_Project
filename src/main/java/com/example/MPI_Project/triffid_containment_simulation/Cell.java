@@ -58,9 +58,9 @@ public class Cell {
                 }
             }
             else {
-                if (random_chance < 3) { // if door is opened, close it with 30% chance
+                if (random_chance < 7) { // if door is opened, close it with 70% chance
                     doorIsOpen = false;
-                    space[0][size - (int)(size/2)] = 2;
+                    space[0][2] = 2;
 
                     //System.out.println("Door at [0:2] closed!");
                 }
