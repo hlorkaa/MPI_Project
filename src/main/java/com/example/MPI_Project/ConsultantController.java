@@ -177,4 +177,9 @@ public class ConsultantController {
 
         return "consultant_temp";
     }
+
+    @PostMapping("/exit")
+    public String goToMain (Map<String, Object> model) {
+        return "redirect:/main";
+    }
 }

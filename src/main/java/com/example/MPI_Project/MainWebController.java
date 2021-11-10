@@ -17,21 +17,25 @@ public class MainWebController {
         return "main_temp";
     }
 
-    @PostMapping("/acc")
+    @PostMapping("/accountant")
     public String goToAccount (Map<String, Object> model) {
-        return "redirect:/account_dep";
+        return "redirect:/account";
     }
-    @PostMapping("/cons")
+    @PostMapping("/consultant")
     public String goToCons (Map<String, Object> model) {
         return "redirect:/consultant";
     }
-    @PostMapping("/manag")
+    @PostMapping("/manager")
     public String goToManager (Map<String, Object> model) {
         return "redirect:/manager";
     }
-    @PostMapping("/worker")
+    @PostMapping("/workman")
     public String goToWorker (Map<String, Object> model) {
         return "redirect:/workman";
+    }
+    @PostMapping("/security")
+    public String goToSecurity (Map<String, Object> model) {
+        return "redirect:/security";
     }
 }
 

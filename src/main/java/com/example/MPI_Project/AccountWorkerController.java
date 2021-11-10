@@ -131,4 +131,9 @@ public class AccountWorkerController {
         putVariables(model, "",  "");
         return "account_temp";
     }
+
+    @PostMapping("/exit")
+    public String goToMain (Map<String, Object> model) {
+        return "redirect:/main";
+    }
 }

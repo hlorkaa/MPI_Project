@@ -94,4 +94,9 @@ public class WorkmanController {
 
         return "workman_temp";
     }
+
+    @PostMapping("/exit")
+    public String goToMain (Map<String, Object> model) {
+        return "redirect:/main";
+    }
 }

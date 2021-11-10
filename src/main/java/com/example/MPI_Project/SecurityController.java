@@ -87,7 +87,7 @@ public class SecurityController {
                 ImageName = buildImageName(cell_5);
                 break;
         }
-        System.out.println(ImageName);
+        //System.out.println(ImageName);
         model.put("ImageName", ImageName);
         model.put("condition_1", condition_1);
         model.put("condition_2", condition_2);
@@ -128,5 +128,10 @@ public class SecurityController {
         model.put("condition_5", condition_5);
         model.put("camera_number", camera_number);
         return "security_temp";
+    }
+
+    @PostMapping("/exit")
+    public String goToMain (Map<String, Object> model) {
+        return "redirect:/main";
     }
 }

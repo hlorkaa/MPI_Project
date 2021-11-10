@@ -120,6 +120,11 @@ public class ManagerController {
 
         return "manager_temp";
     }
+
+    @PostMapping("/exit")
+    public String goToMain (Map<String, Object> model) {
+        return "redirect:/main";
+    }
 }
 
 
