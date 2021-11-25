@@ -111,7 +111,7 @@ public class SecurityController {
         model.put("condition_4", condition_4);
         model.put("condition_5", condition_5);
         model.put("camera_number", camera_number);
-        return "security_temp";
+        return "redirect:/security";
     }
 
     @PostMapping("/prev")
@@ -127,7 +127,7 @@ public class SecurityController {
         model.put("condition_4", condition_4);
         model.put("condition_5", condition_5);
         model.put("camera_number", camera_number);
-        return "security_temp";
+        return "redirect:/security";
     }
 
     @PostMapping("/exit")

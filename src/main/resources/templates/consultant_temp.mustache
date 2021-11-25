@@ -43,7 +43,7 @@
     <tbody>
     <tr>
         <td>Время</td>
-        <td style="text-align: right;"><form action="/consultant/exit" method="post"><input name="exitButton" type="button" value="Выход" /></form></td>
+        <td style="text-align: right;"><form action="/consultant/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
     </tr>
     <tr>
         <td>
@@ -51,7 +51,7 @@
             {{#orders}}
                 <div>
                     <b>{{id}}</b>
-                    <span>{{name}}</span>
+                    <span>{{ordername}}</span>
                     <i>{{customer}}</i>
                     <form action="/consultant/delete" method="post">
                         <input type="hidden" name="deleteOrder_id" value={{id}}>

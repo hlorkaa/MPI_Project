@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/account_dep")
+@RequestMapping("/account")
 public class AccountWorkerController {
     @Autowired
     private FinancesRepo financesRepo;
