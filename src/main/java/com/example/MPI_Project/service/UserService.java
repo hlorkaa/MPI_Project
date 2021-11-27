@@ -17,8 +17,6 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
     @Autowired
     UserRepo userRepo;
     @Autowired
@@ -35,12 +33,12 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User findUserById(Long userId) {
+    public User findUserById(Integer userId) {
         Optional<User> userFromDb = userRepo.findById(userId);
         return userFromDb.orElse(new User());
     }
 
-    public List<User> allUsers() {
+    public Iterable<User> allUsers() {
         return userRepo.findAll();
     }
 
@@ -56,7 +54,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean deleteUser(Long userId) {
+    public boolean deleteUser(Integer userId) {
         if (userRepo.findById(userId).isPresent()) {
             userRepo.deleteById(userId);
             return true;

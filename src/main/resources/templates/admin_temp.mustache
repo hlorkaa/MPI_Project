@@ -1,7 +1,52 @@
 {{>layout/header}}
 
-<h1>Страница администратора</h1>
-<hr>
-<a href="/main">main page</a>
+<table border="1" cellpadding="1" cellspacing="1" class="styled-table">
+    <tbody>
+        <tr>
+            <td>Пользователи</td>
+            <td class="rightСol"><form action="/admin/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="colUser">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>ИД</th>
+                                <th>Имя пользователя</th>
+                                <th>Должность</th>
+                            </tr>
+                            {{#users}}
+                                <tr>
+                                    <td class="colUser">
+                                        <b>{{id}}</b>
+                                    </td>
+                                    <td class="colUser">
+                                        <span>{{username}}</span>
+                                    </td>
+                                    <td class="colUser">
+                                        <i>{{role}}</i>
+                                    </td>
+                                    <td class="colUser">
+                                        <form action="/admin/delete" method="post">
+                                            <input type="hidden" name="deleteUser_id" value={{id}}>
+                                            <button name="user_deleteButton" type="submit">удалить</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{/users}}
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+            <td>
+                <form action="/user/signUp">
+                    <button name="task_signUpButton" type="submit">Зарегистрировать<br>пользователя</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 
 {{>layout/footor}}

@@ -66,8 +66,6 @@ public class ManagerController {
         return "manager_temp";
     }
 
-
-
     @PostMapping("/choose")
     public String chooseTask (
             @RequestParam Integer chooseTask_id,

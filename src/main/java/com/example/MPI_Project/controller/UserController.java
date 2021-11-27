@@ -42,7 +42,7 @@ public class UserController {
             }
         }
 
-        return "redirect:/main";
+        return "redirect:/admin";
     }
 
     @GetMapping("/login")

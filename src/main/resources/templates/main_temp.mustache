@@ -43,28 +43,7 @@
 </head>
 <body>
 <table class="styled-table">
-    {{^isLoggedIn}}
-        <tr>
-            <form action="/user/login">
-                <button name="task_loginButton" type="submit">Войти</button>
-            </form>
-        </tr>
-        <tr>
-            <form action="/user/signUp">
-                <button name="task_signUpButton" type="submit">Зарегистрироваться</button>
-            </form>
-        </tr>
-    {{/isLoggedIn}}
-
-    {{#isLoggedIn}}
-        <tr>
-            <form action="/user/logout">
-                <button name="task_logoutButton" type="submit">Выйти</button>
-            </form>
-        </tr>
-    {{/isLoggedIn}}
-
-    <tr>
+   <tr>
         <form action="/main/accountant" method="post">
             <button name="task_accButton" type="submit">Бухгалтер</button>
         </form>
@@ -90,6 +69,30 @@
             <button name="task_secButton" type="submit">Охранник</button>
         </form>
     </tr>
+
+    {{#isAdmin}}
+        <tr>
+            <form action="/admin">
+                <button name="task_adminButton" type="submit">Пользователи</button>
+            </form>
+        </tr>
+    {{/isAdmin}}
+
+    {{^isLoggedIn}}
+        <tr>
+            <form action="/user/login">
+                <button name="task_loginButton" type="submit">Войти</button>
+            </form>
+        </tr>
+    {{/isLoggedIn}}
+
+    {{#isLoggedIn}}
+        <tr>
+            <form action="/user/logout">
+                <button name="task_logoutButton" type="submit">Выйти</button>
+            </form>
+        </tr>
+    {{/isLoggedIn}}
 </table>
 </body>
 </html>
