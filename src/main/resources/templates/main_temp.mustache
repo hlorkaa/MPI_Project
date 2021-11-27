@@ -43,6 +43,27 @@
 </head>
 <body>
 <table class="styled-table">
+    {{^isLoggedIn}}
+        <tr>
+            <form action="/user/login">
+                <button name="task_loginButton" type="submit">Войти</button>
+            </form>
+        </tr>
+        <tr>
+            <form action="/user/signUp">
+                <button name="task_signUpButton" type="submit">Зарегистрироваться</button>
+            </form>
+        </tr>
+    {{/isLoggedIn}}
+
+    {{#isLoggedIn}}
+        <tr>
+            <form action="/user/logout">
+                <button name="task_logoutButton" type="submit">Выйти</button>
+            </form>
+        </tr>
+    {{/isLoggedIn}}
+
     <tr>
         <form action="/main/accountant" method="post">
             <button name="task_accButton" type="submit">Бухгалтер</button>
@@ -65,7 +86,8 @@
     </tr>
     <tr>
         <form action="/main/security" method="post">
-            <button name="task_workButton" type="submit">Охранник</button>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <button name="task_secButton" type="submit">Охранник</button>
         </form>
     </tr>
 </table>

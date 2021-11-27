@@ -1,0 +1,35 @@
+{{>layout/header}}
+
+<table border="1" cellpadding="1" cellspacing="1" class="styled-table">
+    <tbody>
+    <tr>
+        <td>Регистрация</td>
+        <td style="text-align: right;"><form action="/user/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
+    </tr>
+
+    <tr>
+        <td width=350>
+            <form action="/user/signUp" method="post">
+                <p><label for="username">Имя пользователя</label></p>
+                <p><input type="text" name="username" id="username" placeholder="Введите имя пользователя."></p>
+
+                <p><label for="role">Должность</label></p>
+                <p><input type="radio" id="role_WORKMAN" name="role" value="WORKMAN" checked><label for="role_WORKMAN">Сотрудник</label></p>
+                <p><input type="radio" id="role_ACCOUNT" name="role" value="ACCOUNT"><label for="role_ACCOUNT">Бухгалтер</label></p>
+                <p><input type="radio" id="role_SECURITY" name="role" value="SECURITY"><label for="role_SECURITY">Охранник</label></p>
+                <p><input type="radio" id="role_CONSULTANT" name="role" value="CONSULTANT"><label for="role_CONSULTANT">Консультант</label></p>
+                <p><input type="radio" id="role_MANAGER" name="role" value="MANAGER"><label for="role_MANAGER">Менеджер</label></p>
+
+                <p><label for="password">Пароль</label></p>
+                <p><input type="password" name="password" id="password" placeholder="Введите пароль."></p>
+
+                <button type="submit">Зарегистрироваться</button>
+
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+{{>layout/footor}}

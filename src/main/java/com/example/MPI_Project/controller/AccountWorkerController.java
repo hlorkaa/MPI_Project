@@ -1,4 +1,4 @@
-package com.example.MPI_Project;
+package com.example.MPI_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.MPI_Project.domain.Finances;
 import com.example.MPI_Project.domain.Report;
-import com.example.MPI_Project.domain.Task;
 import com.example.MPI_Project.repos.FinancesRepo;
 import com.example.MPI_Project.repos.ReportRepo;
-import com.example.MPI_Project.repos.TaskRepo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
