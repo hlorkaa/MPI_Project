@@ -47,7 +47,7 @@
         <td>
             <p><strong>Создать отчет</strong></p>
             <div>
-                <form action="/account_dep/create_report_by_type" method="post">
+                <form action="/account/create_report_by_type" method="post">
                     <p>
                     <p>Выберите тип отчета</p>
                     <select type="text" name="type">
@@ -88,7 +88,7 @@
         <td colspan="1" rowspan="2">
             <p><strong>Новая запись о финансах</strong></p>
 
-            <form action="/account_dep/create_finance" method="post">
+            <form action="/account/create_finance" method="post">
                 <p>
                 <p>Выберите тип записи</p>
                 <select type="text" name="type">
@@ -116,7 +116,7 @@
                 <div>
                     <span>{{title}}</span>
                     <span>{{text}}</span>
-                    <form action="/account_dep/delete" method="post">
+                    <form action="/account/delete" method="post">
                         <input type="hidden" name="deleteReport_id" value={{id}}>
                         <button name="task_deleteButton" type="submit">Удалить</button>
                     </form>
