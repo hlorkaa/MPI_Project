@@ -1,74 +1,34 @@
-<!doctype html>
-<html>
-<head>
-    <title>Охранник</title>
-    <meta http-equiv="refresh" content="1">
-    <style>
-        .styled-table {
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        font-family: sans-serif;
-        min-width: 400px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-    .styled-table thead tr {
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
-    }
-    .styled-table th,
-    .styled-table td {
-        padding: 12px 15px;
-    }
-    .styled-table tbody tr {
-        border-bottom: 1px solid #dddddd;
-        vertical-align: top;
-        background-color: #f3f3f3;
-    }
-    .styled-table tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
-    .styled-table tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
-    }
-    .styled-table tbody tr.active-row {
-        font-weight: bold;
-        color: #009879;
-    }
-    </style>
-</head>
-<body>
-    <table border="1" cellpadding="1" cellspacing="1" class="styled-table">
-        <tbody>
-            <tr>
-                <td>Время</td>
-                <td style="text-align: right;"><form action="/security/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
-            </tr>
-            <tr>
-                <td width=350>
-                    <p><strong>Состояние клеток</strong></p>
-                    <p>Клетка 1: {{condition_1}}</p>
-                    <p>Клетка 2: {{condition_2}}</p>
-                    <p>Клетка 3: {{condition_3}}</p>
-                    <p>Клетка 4: {{condition_4}}</p>
-                    <p>Клетка 5: {{condition_5}}</p>
-                </td>
-                <td>
-                    <p>
-                        <form  action="/security/next" method="post">
-                            <input type="submit" value="->">
-                        </form>
-                        <form  action="/security/prev" method="post">
-                            <input type="submit" value="<-">
-                        </form>
-                    </p>
-                    <p><img src="{{ImageName}}" height="300" width="300"></p>
-                    <p>Камера в клетке {{camera_number}}</p>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    
-</body>
-</html>
+{{>layout/header}}
+
+<table border="1" cellpadding="1" cellspacing="1" class="styled-table">
+    <tbody>
+        <tr>
+            <td>Охранник</td>
+            <td class="rightСol"><form action="/security/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
+        </tr>
+        <tr>
+            <td width=350>
+                <p><strong>Состояние клеток</strong></p>
+                <p>Клетка 1: {{condition_1}}</p>
+                <p>Клетка 2: {{condition_2}}</p>
+                <p>Клетка 3: {{condition_3}}</p>
+                <p>Клетка 4: {{condition_4}}</p>
+                <p>Клетка 5: {{condition_5}}</p>
+            </td>
+            <td>
+                <p>
+                    <form  action="/security/next" method="post">
+                        <input type="submit" value="->">
+                    </form>
+                    <form  action="/security/prev" method="post">
+                        <input type="submit" value="<-">
+                    </form>
+                </p>
+                <p><img src="{{ImageName}}" height="300" width="300"></p>
+                <p>Камера в клетке {{camera_number}}</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+{{>layout/footor}}
