@@ -33,7 +33,7 @@
                                 </td>
                                 <td class="colTask">
                                     <form action="/workman/choose" method="post">
-                                        <input type="hidden" name="chooseTask_id" value={{id}}>
+                                        <input type="hidden" name="chooseTask_id" value="{{id}}">
                                         <button class="colTask" name="task_changeButton" type="submit">Просмотр и редактирование</button>
                                     </form>
                                 </td>
@@ -50,9 +50,9 @@
 
             <form action="/workman/edit" method="post">
                 <p>
-                    <input type="hidden" name="task_id" value={{task_id}}>
-                    <input readonly type="text" name="task_name" placeholder="" value={{task_name}}>
-                    <input readonly type="text" name="task_deadline" placeholder="" value={{task_deadline}}>
+                    <input type="hidden" name="task_id" value="{{task_id}}">
+                    <input readonly type="text" name="task_name" placeholder="" value="{{task_name}}">
+                    <input readonly type="text" name="task_deadline" placeholder="" value="{{task_deadline}}">
                 </p>
 
                 <p>
@@ -63,7 +63,7 @@
 
                 <p><textarea cols="40" name="task_description" rows="10" placeholder="" readonly>{{task_description}}</textarea></p>
 
-                <p><input readonly type="text" name="task_workman" placeholder="" value={{task_workman}}></p>
+                <p><input readonly type="text" name="task_workman" placeholder="" value="{{task_workman}}"></p>
 
                 <p>
                     <input type="submit" value="ОК">

@@ -34,13 +34,13 @@
                                 </td>
                                 <td class="colTask">
                                     <form action="/manager/delete" method="post">
-                                        <input type="hidden" name="deleteTask_id" value={{id}}>
+                                        <input type="hidden" name="deleteTask_id" value="{{id}}">
                                         <button name="task_deleteButton" type="submit">Удалить</button>
                                     </form>
                                 </td>
                                 <td class="colTask">
                                     <form action="/manager/choose" method="post">
-                                        <input type="hidden" name="chooseTask_id" value={{id}}>
+                                        <input type="hidden" name="chooseTask_id" value="{{id}}">
                                         <button class="colTask" name="task_changeButton" type="submit">Просмотр и редактирование</button>
                                     </form>
                                 </td>
@@ -56,12 +56,14 @@
             <p><strong>Редактировать задачу</strong></p>
 
             <form action="/manager/edit" method="post">
+
+                <input type="hidden" name="task_id" value="{{task_id}}">
                 <p>
-                    <input type="hidden" name="task_id" value={{task_id}}>
-                    <input type="text" name="task_name" placeholder="Введите название" value={{task_name}}></p>
+                    <input style="white-space: nowrap;" type="text" name="task_name" placeholder="Введите название" value="{{task_name}}">
+                </p>
 
                 <p>
-                    Дедлайн: <input type="date" name="task_deadline" placeholder="Введите дедлайн" value={{task_deadline}}>
+                    Дедлайн: <input type="date" name="task_deadline" placeholder="Введите дедлайн" value="{{task_deadline}}">
                 </p>
 
                 <p>
@@ -74,7 +76,7 @@
 
                 <p><textarea cols="40" name="task_description" rows="10" placeholder="Введите описание">{{task_description}}</textarea></p>
 
-                <p><input type="text" name="task_workman" placeholder="Введите исполнителя" value={{task_workman}}></p>
+                <p><input type="text" name="task_workman" placeholder="Введите исполнителя" value="{{task_workman}}"></p>
 
                 <p>
                     <input type="submit" value="ОК">

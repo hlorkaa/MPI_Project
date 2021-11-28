@@ -34,13 +34,13 @@
                                 </td>
                                 <td class="colOrder">
                                     <form action="/consultant/delete" method="post">
-                                        <input type="hidden" name="deleteOrder_id" value={{id}}>
+                                        <input type="hidden" name="deleteOrder_id" value="{{id}}">
                                         <button name="order_deleteButton" type="submit">Удалить</button>
                                     </form>
                                 </td>
                                 <td class="colOrder">
                                     <form action="/consultant/choose" method="post">
-                                        <input type="hidden" name="chooseOrder_id" value={{id}}>
+                                        <input type="hidden" name="chooseOrder_id" value="{{id}}">
                                         <button class="colOrder" name="order_changeButton" type="submit">Просмотр и редактирование</button>
                                     </form>
                                 </td>
@@ -57,14 +57,14 @@
 
             <form action="/consultant/edit" method="post">
                 <p>
-                    <input type="hidden" name="order_id" value={{order_id}}>
-                    <input type="text" name="order_name" placeholder="Введите название" value={{order_name}}>
-                    <input type="text" name="order_customer" placeholder="Введите заказчика" value={{order_customer}}>
+                    <input type="hidden" name="order_id" value="{{order_id}}">
+                    <input type="text" name="order_name" placeholder="Введите название" value="{{order_name}}">
+                    <input type="text" name="order_customer" placeholder="Введите заказчика" value="{{order_customer}}">
                 </p>
 
                 <p>
-                    Дата: <input type="date" name="order_date" placeholder="Введите дату" value={{order_date}}>
-                    Дедлайн: <input type="date" name="order_deadline" placeholder="Введите дедлайн" value={{order_deadline}}>
+                    Дата: <input type="date" name="order_date" placeholder="Введите дату" value="{{order_date}}">
+                    Дедлайн: <input type="date" name="order_deadline" placeholder="Введите дедлайн" value="{{order_deadline}}">
                 </p>
 
                 <p>
@@ -74,10 +74,10 @@
                 </p>
 
                 <p>
-                    <input type="number" min="1" name="order_quantity" placeholder="Введите количество" value={{order_quantity}}>
+                    <input type="number" min="1" name="order_quantity" placeholder="Введите количество" value="{{order_quantity}}">
                 </p>
 
-                <p><textarea cols="40" name="order_description" rows="5" placeholder="Введите примечания">{{order_notes}}</textarea></p>
+                <p><textarea cols="40" name="order_notes" rows="5" placeholder="Введите примечания">{{order_notes}}</textarea></p>
 
                 <p>
                     <input type="submit" value="ОК">
