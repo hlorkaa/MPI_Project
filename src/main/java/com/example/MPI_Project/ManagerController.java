@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-import com.example.MPI_Project.triffid_containment_simulation.Cell;
-
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {

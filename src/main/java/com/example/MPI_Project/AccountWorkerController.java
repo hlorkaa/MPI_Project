@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.MPI_Project.domain.Finances;
 import com.example.MPI_Project.domain.Report;
-import com.example.MPI_Project.domain.Task;
 import com.example.MPI_Project.repos.FinancesRepo;
 import com.example.MPI_Project.repos.ReportRepo;
-import com.example.MPI_Project.repos.TaskRepo;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,12 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/account_dep")
+@RequestMapping("/account")
 public class AccountWorkerController {
     @Autowired
     private FinancesRepo financesRepo;
     @Autowired
     private ReportRepo reportRepo;
+
     public void putVariables(Map<String, Object> model, String title, String text) {
         Iterable<Report> reports = reportRepo.findAll();
         model.put("reports", reports);
