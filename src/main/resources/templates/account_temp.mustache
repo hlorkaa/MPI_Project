@@ -12,8 +12,11 @@
         }
         .styled-table thead tr {
             background-color: #009879;
-            color: #ffffff;
+            color: #000000;
             text-align: left;
+            position: sticky;
+            top: 0;
+            font-size: 0.9em;
         }
         .styled-table th,
         .styled-table td {
@@ -33,6 +36,18 @@
         .styled-table tbody tr.active-row {
             font-weight: bold;
             color: #009879;
+        }
+        .styled-table td.colReport {
+            padding: 2px 15px;
+            height: 5px;
+        }
+        .styled-table div.colReport {
+            height:200px;
+            max-width: 1200px;
+            overflow:auto;
+        }
+        .styled-table button.colReport {
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -110,21 +125,44 @@
 </table>
 <table border="1" class="styled-table">
     <tr>
-        <td>
+        <td colspan="2">
             <p><strong>Текущие отчеты</strong></p>
-            {{#reports}}
-                <div>
-                    <span>{{title}}</span>
-                    <span>{{text}}</span>
-                    <form action="/account/delete" method="post">
-                        <input type="hidden" name="deleteReport_id" value={{id}}>
-                        <button name="task_deleteButton" type="submit">Удалить</button>
-                    </form>
-                </div>
-            {{/reports}}
+            <div class="colReport">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ИД</th>
+                            <th>Наименование</th>
+                            <th>Описание</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#reports}}
+                            <tr>
+                                <td class="colReport">
+                                    <b>{{id}}</b>
+                                </td>
+                                <td class="colReport">
+                                    <span>{{title}}</span>
+                                </td>
+                                <td class="colReport">
+                                    <i>{{text}}</i>
+                                </td>
+                                <td class="colReport">
+                                    <form action="/account/delete" method="post">
+                                        <input type="hidden" name="deleteReport_id" value={{id}}>
+                                        <button name="task_deleteButton" type="submit">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {{/reports}}
+                    </tbody>
+                </table>
+            </div>
         </td>
     </tr>
 </table>
-</body>
+
 </body>
 </html>

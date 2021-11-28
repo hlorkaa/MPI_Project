@@ -13,8 +13,11 @@
         }
         .styled-table thead tr {
             background-color: #009879;
-            color: #ffffff;
+            color: #000000;
             text-align: left;
+            position: sticky;
+            top: 0;
+            font-size: 0.9em;
         }
         .styled-table th,
         .styled-table td {
@@ -35,6 +38,18 @@
             font-weight: bold;
             color: #009879;
         }
+        .styled-table td.colTask {
+            padding: 2px 15px;
+            height: 5px;
+        }
+        .styled-table div.colTask {
+            height:200px;
+            max-width: 1200px;
+            overflow:auto;
+        }
+        .styled-table button.colTask {
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -46,20 +61,43 @@
         <td style="text-align: right;"><form action="/workman/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td>
             <p><strong>Текущие задачи</strong></p>
-            {{#tasks}}
-                <div>
-                    <b>{{id}}</b>
-                    <span>{{name}}</span>
-                    <i>{{status}}</i>
-                    <form action="/workman/choose" method="post">
-                        <input type="hidden" name="chooseTask_id" value={{id}}>
-                        <button name="task_changeButton" type="submit">Просмотр и редактирование</button>
-                    </form>
-                </div>
-            {{/tasks}}
+            <div class="colTask">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ИД</th>
+                            <th>Наименование</th>
+                            <th>Статус</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#tasks}}
+                            <tr>
+                                <td class="colTask">
+                                    <b>{{id}}</b>
+                                </td>
+                                <td class="colTask">
+                                    <span>{{name}}</span>
+                                </td>
+                                <td class="colTask">
+                                    <i>{{status}}</i>
+                                </td>
+                                <td class="colTask">
+                                    <form action="/workman/choose" method="post">
+                                        <input type="hidden" name="chooseTask_id" value={{id}}>
+                                        <button class="colTask" name="task_changeButton" type="submit">Просмотр и редактирование</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {{/tasks}}
+                    </tbody>
+                </table>
+            </div>
         </td>
+        <td></td>
     </tr>
     <tr>
         <td colspan="2">

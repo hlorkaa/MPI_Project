@@ -13,8 +13,11 @@
         }
         .styled-table thead tr {
             background-color: #009879;
-            color: #ffffff;
+            color: #000000;
             text-align: left;
+            position: sticky;
+            top: 0;
+            font-size: 0.9em;
         }
         .styled-table th,
         .styled-table td {
@@ -35,6 +38,18 @@
             font-weight: bold;
             color: #009879;
         }
+        .styled-table td.colOrder {
+             padding: 2px 15px;
+             height: 5px;
+         }
+        .styled-table div.colOrder {
+            height:200px;
+            max-width: 800px;
+            overflow:auto;
+        }
+        .styled-table button.colOrder {
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -46,54 +61,48 @@
         <td style="text-align: right;"><form action="/consultant/exit" method="post"><input name="exitButton" type="submit" value="Выход" /></form></td>
     </tr>
     <tr>
-        <td>
+        <td colspan="2">
             <p><strong>Текущие заказы</strong></p>
-            {{#orders}}
-                <div>
-                    <b>{{id}}</b>
-                    <span>{{ordername}}</span>
-                    <i>{{customer}}</i>
-                    <form action="/consultant/delete" method="post">
-                        <input type="hidden" name="deleteOrder_id" value={{id}}>
-                        <button name="order_deleteButton" type="submit">Удалить</button>
-                    </form>
-                    <form action="/consultant/choose" method="post">
-                        <input type="hidden" name="chooseOrder_id" value={{id}}>
-                        <button name="order_changeButton" type="submit">Просмотр и редактирование</button>
-                    </form>
-                </div>
-            {{/orders}}
-        </td>
-        <td colspan="1" rowspan="2">
-            <p><strong>Новый заказ</strong></p>
-
-            <form action="/consultant/create" method="post">
-                <p>
-                    <input type="text" name="newOrder_name" placeholder="Введите название">
-                    <input type="text" name="newOrder_customer" placeholder="Введите заказчика">
-                </p>
-                <p>
-                    Дата: <input type="date" name="newOrder_date" placeholder="Введите дату">
-                    Дедлайн: <input type="date" name="newOrder_deadline" placeholder="Введите дедлайн">
-                </p>
-
-                <p>
-                    <input type="radio" id="orderQuality_low" name="newOrder_quality" value="Техническое"><label for="taskStatus_submitted">Техническое</label>
-                    <input type="radio" id="orderQuality_mid" name="newOrder_quality" value="Обычное" checked><label for="taskStatus_ready">Обычное</label>
-                    <input type="radio" id="orderQuality_top" name="newOrder_quality" value="Высококачественное"><label for="taskStatus_wip">Высококачественное</label>
-                </p>
-
-                <p>
-                    <input type="number" min="1" name="newOrder_quantity" placeholder="Введите количество">
-                </p>
-
-                <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания"></textarea></p>
-
-                <p>
-                    <input type="submit" value="ОК">
-                    <input type="reset" value="Отмена">
-                </p>
-            </form>
+            <div class="colOrder">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ИД</th>
+                            <th>Наименование</th>
+                            <th>Заказчик</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#orders}}
+                            <tr>
+                                <td class="colOrder">
+                                    <b>{{id}}</b>
+                                </td>
+                                <td class="colOrder">
+                                    <span>{{ordername}}</span>
+                                </td>
+                                <td class="colOrder">
+                                    <i>{{customer}}</i>
+                                </td>
+                                <td class="colOrder">
+                                    <form action="/consultant/delete" method="post">
+                                        <input type="hidden" name="deleteOrder_id" value={{id}}>
+                                        <button name="order_deleteButton" type="submit">Удалить</button>
+                                    </form>
+                                </td>
+                                <td class="colOrder">
+                                    <form action="/consultant/choose" method="post">
+                                        <input type="hidden" name="chooseOrder_id" value={{id}}>
+                                        <button class="colOrder" name="order_changeButton" type="submit">Просмотр и редактирование</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {{/orders}}
+                    </tbody>
+                </table>
+            </div>
         </td>
     </tr>
     <tr>
@@ -131,6 +140,37 @@
             <form  action="/consultant/cancel" method="post">
                 <p>
                     <input type="submit" value="Отмена">
+                </p>
+            </form>
+        </td>
+        <td colspan="1" rowspan="2">
+            <p><strong>Новый заказ</strong></p>
+
+            <form action="/consultant/create" method="post">
+                <p>
+                    <input type="text" name="newOrder_name" placeholder="Введите название">
+                    <input type="text" name="newOrder_customer" placeholder="Введите заказчика">
+                </p>
+                <p>
+                    Дата: <input type="date" name="newOrder_date" placeholder="Введите дату">
+                    Дедлайн: <input type="date" name="newOrder_deadline" placeholder="Введите дедлайн">
+                </p>
+
+                <p>
+                    <input type="radio" id="orderQuality_low" name="newOrder_quality" value="Техническое"><label for="taskStatus_submitted">Техническое</label>
+                    <input type="radio" id="orderQuality_mid" name="newOrder_quality" value="Обычное" checked><label for="taskStatus_ready">Обычное</label>
+                    <input type="radio" id="orderQuality_top" name="newOrder_quality" value="Высококачественное"><label for="taskStatus_wip">Высококачественное</label>
+                </p>
+
+                <p>
+                    <input type="number" min="1" name="newOrder_quantity" placeholder="Введите количество">
+                </p>
+
+                <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания"></textarea></p>
+
+                <p>
+                    <input type="submit" value="ОК">
+                    <input type="reset" value="Отмена">
                 </p>
             </form>
         </td>

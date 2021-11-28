@@ -61,8 +61,8 @@ public class ConsultantController {
         Integer flag;
         if (orderRepo == null)
             flag = 0;
-        //Iterable<OrderCard> orders = orderRepo.findAll();
-        Iterable<OrderCard> orders = null;
+        Iterable<OrderCard> orders = orderRepo.findAll();
+//        Iterable<OrderCard> orders = null;
         model.put("orders", orders);
         model.put("order_id", id);
         model.put("order_name", name);
