@@ -73,7 +73,7 @@ public class OrderCard {
     }
 
     public void setDate(String date) {
-        this.ordername = date;
+        this.orderdate = date;
     }
 
     public String getOrderdeadline() {
