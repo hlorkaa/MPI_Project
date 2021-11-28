@@ -1,8 +1,5 @@
-package com.example.MPI_Project;
+package com.example.MPI_Project.controller;
 
-import com.example.MPI_Project.domain.Task;
-import com.example.MPI_Project.repos.TaskRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +14,10 @@ public class MainWebController {
         return "main_temp";
     }
 
+    @PostMapping("/admin")
+    public String goToAdmin (Map<String, Object> model) {
+        return "redirect:/admin";
+    }
     @PostMapping("/accountant")
     public String goToAccount (Map<String, Object> model) {
         return "redirect:/account";

@@ -1,4 +1,4 @@
-package com.example.MPI_Project;
+package com.example.MPI_Project.controller;
 
 import com.example.MPI_Project.domain.Task;
 import com.example.MPI_Project.repos.TaskRepo;
@@ -65,8 +65,6 @@ public class ManagerController {
 
         return "manager_temp";
     }
-
-
 
     @PostMapping("/choose")
     public String chooseTask (

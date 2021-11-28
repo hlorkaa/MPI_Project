@@ -1,13 +1,12 @@
-package com.example.MPI_Project;
+package com.example.MPI_Project.controller;
 
 import com.example.MPI_Project.triffid_containment_simulation.Cell;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.awt.*;
 import java.util.Map;
 
 @Controller
@@ -111,7 +110,7 @@ public class SecurityController {
         model.put("condition_4", condition_4);
         model.put("condition_5", condition_5);
         model.put("camera_number", camera_number);
-        return "security_temp";
+        return "redirect:/security";
     }
 
     @PostMapping("/prev")
@@ -127,7 +126,7 @@ public class SecurityController {
         model.put("condition_4", condition_4);
         model.put("condition_5", condition_5);
         model.put("camera_number", camera_number);
-        return "security_temp";
+        return "redirect:/security";
     }
 
     @PostMapping("/exit")

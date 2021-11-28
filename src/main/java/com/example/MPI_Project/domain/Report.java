@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Report {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String text;

@@ -1,4 +1,4 @@
-package com.example.MPI_Project;
+package com.example.MPI_Project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

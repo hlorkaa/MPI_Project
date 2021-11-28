@@ -1,0 +1,17 @@
+{{>layout/header}}
+
+<table border="1" cellpadding="1" cellspacing="1" class="styled-table">
+    <tbody>
+        <tr>
+            <td>
+                <p>Успешный вход </p>
+                <p>Добро пожаловать в систему  <span>{{userName}}</span></p>
+            </td>
+
+            <td style="text-align: right;"><form action="/user/exit" method="post"><input name="exitButton" type="submit" value="Ок" /></form></td>
+        </tr>
+    </tbody>
+</table>
+
+
+{{>layout/footor}}
