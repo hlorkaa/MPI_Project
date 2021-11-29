@@ -49,19 +49,16 @@ public class AccountWorkerController {
 
     @PostMapping("/create_finance")
     public String createNewFinance (
-            @RequestParam String date,
-            @RequestParam Double amount,
-            @RequestParam String type,
+            @RequestParam(defaultValue = "") String date,
+            @RequestParam(defaultValue = "0.0") Double amount,
+            @RequestParam(defaultValue = "") String type,
             Map<String, Object> model) {
-        if (date == null)
-            date = "";
-        if (amount == null)
-            amount = 0.0;
-        if (type == null)
-            type = "";
+
         Finances finance = new Finances(date, amount, type);
         putFinance(model, "", 0.0, "");
-        financesRepo.save(finance);
+        if (!date.equals("") && !amount.equals(0.0) && !type.equals("")) {
+            financesRepo.save(finance);
+        }
 
         putVariables(model, "", "");
         return "account_temp";

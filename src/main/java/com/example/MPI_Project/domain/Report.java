@@ -10,6 +10,7 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String title;
     private String text;
     private Double sum;
@@ -21,6 +22,7 @@ public class Report {
     }
 
     public Report() {
+        //this.id = id;
     }
 
     public String getTitle() {
