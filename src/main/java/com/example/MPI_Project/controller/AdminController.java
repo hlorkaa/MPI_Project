@@ -7,7 +7,6 @@ import com.example.MPI_Project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepo userRepo;
     private SecurityHelper secHelper;
 
     @PostConstruct
@@ -43,22 +41,26 @@ public class AdminController {
     }
 
     @GetMapping
-    public String userList(Map<String, Object> model) {
-        putVariables(model, 0,  "",  "");
-        return "admin_temp";
+    public Callable<String> userList(Map<String, Object> model) {
+        return () -> {
+            putVariables(model, 0,  "",  "");
+            return "admin_temp";
+        };
     }
 
     @PostMapping("/delete")
-    public String deleteOrder(@RequestParam Integer deleteUser_id, Map<String, Object> model) {
-        userService.deleteUser(deleteUser_id);
-        putVariables(model, 0, "", "");
+    public Callable<String> deleteOrder(@RequestParam Integer deleteUser_id, Map<String, Object> model) {
+        return () -> {
+            userService.deleteUser(deleteUser_id);
+            putVariables(model, 0, "", "");
 
-        return "admin_temp";
+            return "admin_temp";
+        };
     }
 
     @PostMapping("/exit")
-    public String goToMain (Map<String, Object> model) {
-        return "redirect:/main";
+    public Callable<String> goToMain (Map<String, Object> model) {
+        return () -> "redirect:/main";
     }
 
 }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/account")
@@ -42,94 +43,102 @@ public class AccountWorkerController {
     }
 
     @GetMapping
-    public String start(Map<String, Object> model) {
-        putVariables(model, "", "");
-        return "account_temp";
+    public Callable<String> start(Map<String, Object> model) {
+        return () -> {
+            putVariables(model, "", "");
+            return "account_temp";
+        };
     }
 
     @PostMapping("/create_finance")
-    public String createNewFinance (
+    public Callable<String> createNewFinance (
             @RequestParam(defaultValue = "") String date,
             @RequestParam(defaultValue = "0.0") Double amount,
             @RequestParam(defaultValue = "") String type,
             Map<String, Object> model) {
+        return () -> {
+            Finances finance = new Finances(date, amount, type);
+            putFinance(model, "", 0.0, "");
+            if (!date.equals("") && !amount.equals(0.0) && !type.equals("")) {
+                financesRepo.save(finance);
+            }
 
-        Finances finance = new Finances(date, amount, type);
-        putFinance(model, "", 0.0, "");
-        if (!date.equals("") && !amount.equals(0.0) && !type.equals("")) {
-            financesRepo.save(finance);
-        }
-
-        putVariables(model, "", "");
-        return "account_temp";
+            putVariables(model, "", "");
+            return "account_temp";
+        };
     }
 
     @PostMapping("/create_report_by_type")
-    public String createReportByType (
+    public Callable<String> createReportByType (
             @RequestParam String type,
             Map<String, Object> model) {
-        Report report = new Report();
+        return () -> {
+            Report report = new Report();
 
-        List<Finances> fin = findFinances(type);
-        String date = new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date());
-        report.setTitle("Report: " + date + ". Type: " + type);
-        ArrayList<String> text = new ArrayList<String>();
-        Double sum = 0.0;
+            List<Finances> fin = findFinances(type);
+            String date = new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date());
+            report.setTitle("Report: " + date + ". Type: " + type);
+            ArrayList<String> text = new ArrayList<String>();
+            Double sum = 0.0;
 
-        for (Finances item : fin) {
-            Double amount = item.getAmount();
-            if (amount == null)
-                amount = 0.0;
-            text.add("Date: " + item.getDate() + ", Amount: " + amount + "\n");
-            sum += amount;
-        }
-        if (text.size() == 0) {
-            report.setText("Записей не найдено");
-        } else {
-            String reportsAsString = "";
-            for (String line : text) {
-                reportsAsString = reportsAsString + line + "\n";
+            for (Finances item : fin) {
+                Double amount = item.getAmount();
+                if (amount == null)
+                    amount = 0.0;
+                text.add("Date: " + item.getDate() + ", Amount: " + amount + "\n");
+                sum += amount;
             }
-            report.setText(reportsAsString);
-            report.setSum(sum);
-        }
-        reportRepo.save(report);
-        model.put("report", report);
-        model.put("report_title", report.getTitle());
-        model.put("report_text", report.getText());
-        Double r_sum = report.getSum();
-        if (r_sum == null)
-            r_sum = 0.0;
-        model.put("report_sum", r_sum);
-        putVariables(model, "", "");
+            if (text.size() == 0) {
+                report.setText("Записей не найдено");
+            } else {
+                String reportsAsString = "";
+                for (String line : text) {
+                    reportsAsString = reportsAsString + line + "\n";
+                }
+                report.setText(reportsAsString);
+                report.setSum(sum);
+            }
+            reportRepo.save(report);
+            model.put("report", report);
+            model.put("report_title", report.getTitle());
+            model.put("report_text", report.getText());
+            Double r_sum = report.getSum();
+            if (r_sum == null)
+                r_sum = 0.0;
+            model.put("report_sum", r_sum);
+            putVariables(model, "", "");
 
-        return "account_temp";
+            return "account_temp";
+        };
     }
 
     @PostMapping("/choose")
-    public String chooseReport (
+    public Callable<String> chooseReport (
             @RequestParam String title,
             Map<String, Object> model) {
+        return () -> {
+            List<Report> report = reportRepo.findByTitle(title);
+            Report r = report.get(0);
+            String r_title = r.getTitle();
+            String r_text = r.getText();
 
-        List<Report> report = reportRepo.findByTitle(title);
-        Report r = report.get(0);
-        String r_title = r.getTitle();
-        String r_text = r.getText();
+            putVariables(model, r_title, r_text);
 
-        putVariables(model, r_title, r_text);
-
-        return "account_temp";
+            return "account_temp";
+        };
     }
 
     @PostMapping("/delete")
-    public String deleteTask (@RequestParam Integer deleteReport_id, Map<String, Object> model) {
-        reportRepo.deleteById(deleteReport_id);
-        putVariables(model, "",  "");
-        return "account_temp";
+    public Callable<String> deleteTask (@RequestParam Integer deleteReport_id, Map<String, Object> model) {
+        return () -> {
+            reportRepo.deleteById(deleteReport_id);
+            putVariables(model, "",  "");
+            return "account_temp";
+        };
     }
 
     @PostMapping("/exit")
-    public String goToMain (Map<String, Object> model) {
-        return "redirect:/main";
+    public Callable<String> goToMain (Map<String, Object> model) {
+        return () -> "redirect:/main";
     }
 }

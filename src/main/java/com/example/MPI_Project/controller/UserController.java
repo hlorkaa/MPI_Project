@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/user")
@@ -21,53 +22,56 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/signUp")
-    public String signUp(Model model) {
-        model.addAttribute("userForm", new User());
+    public Callable<String> signUp(Model model) {
+        return () -> {
+            model.addAttribute("userForm", new User());
 
-        return "auth/signUp_temp";
+            return "auth/signUp_temp";
+        };
     }
 
     @PostMapping("/signUp")
-    public String addUser(
+    public Callable<String> addUser(
             @RequestParam String username,
             @RequestParam String role,
             @RequestParam String password,
             Map<String, Object> model) {
+        return () -> {
+            User newUser = new User(username, password, Role.valueOf(role));
 
-        User newUser = new User(username, password, Role.valueOf(role));
-
-        if (!username.equals("") && !password.equals("")) {
-            if (!userService.saveUser(newUser)) {
-                return "auth/signUp_temp";
+            if (!username.equals("") && !password.equals("")) {
+                if (!userService.saveUser(newUser)) {
+                    return "auth/signUp_temp";
+                }
             }
-        }
 
-        return "redirect:/admin";
+            return "redirect:/admin";
+        };
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "auth/login_temp";
+    public Callable<String> login() {
+        return () -> "auth/login_temp";
     }
 
     @GetMapping("/login/result")
-    public String loginSuccess() {
-        return "auth/loginSuccess_temp";
+    public Callable<String> loginSuccess() {
+        return () -> "auth/loginSuccess_temp";
     }
 
     @GetMapping("/logout/result")
-    public String logoutSuccess() {
-        return "auth/logout_temp";
+    public Callable<String> logoutSuccess() {
+        return () -> "auth/logout_temp";
     }
 
     @GetMapping("/denied")
-    public String denied() {
-        return "auth/denied_temp";
+    public Callable<String> denied() {
+        return () -> "auth/denied_temp";
     }
 
     @PostMapping("/exit")
-    public String goToMain (Map<String, Object> model) {
-        return "redirect:/main";
+    public Callable<String> goToMain (Map<String, Object> model) {
+        return () -> "redirect:/main";
     }
 
 }

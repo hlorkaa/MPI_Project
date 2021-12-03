@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/manager")
@@ -30,61 +31,67 @@ public class ManagerController {
     }
 
     @GetMapping
-    public String start(Map<String, Object> model) {
+    public Callable<String> start(Map<String, Object> model) {
+        return () -> {
+            putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
-
-        return "manager_temp";
+            return "manager_temp";
+        };
     }
 
     @PostMapping("/create")
-    public String createNewTask (
+    public Callable<String> createNewTask (
             @RequestParam String newTask_name,
             @RequestParam String newTask_deadline,
             @RequestParam String newTask_status,
             @RequestParam String newTask_description,
             @RequestParam String newTask_workman,
             Map<String, Object> model) {
-        Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
+        return () -> {
+            Task newTask = new Task(newTask_name, newTask_deadline, newTask_status, newTask_description, newTask_workman);
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
+            putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        if (!newTask_name.equals("") && !newTask_deadline.equals("") && !newTask_status.equals("") && !newTask_description.equals("") && !newTask_workman.equals("")) {
-            taskRepo.save(newTask);
+            if (!newTask_name.equals("") && !newTask_deadline.equals("") && !newTask_status.equals("") && !newTask_description.equals("") && !newTask_workman.equals("")) {
+                taskRepo.save(newTask);
 
-        }
-        putVariables(model, 0, "", "", "", "", "");
-        return "manager_temp";
+            }
+            putVariables(model, 0, "", "", "", "", "");
+            return "manager_temp";
+        };
     }
 
     @PostMapping("/delete")
-    public String deleteTask (@RequestParam Integer deleteTask_id, Map<String, Object> model) {
-        taskRepo.deleteById(deleteTask_id);
+    public Callable<String> deleteTask (@RequestParam Integer deleteTask_id, Map<String, Object> model) {
+        return () -> {
+            taskRepo.deleteById(deleteTask_id);
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
+            putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager_temp";
+            return "manager_temp";
+        };
     }
 
     @PostMapping("/choose")
-    public String chooseTask (
+    public Callable<String> chooseTask (
             @RequestParam Integer chooseTask_id,
             Map<String, Object> model) {
+        return () -> {
+            Task task = findTask(chooseTask_id);
+            String task_name = task.getName();
+            String task_deadline = task.getDeadline();
+            String task_status = task.getStatus();
+            String task_description = task.getDescription();
+            String task_workman = task.getWorkman();
 
-        Task task = findTask(chooseTask_id);
-        String task_name = task.getName();
-        String task_deadline = task.getDeadline();
-        String task_status = task.getStatus();
-        String task_description = task.getDescription();
-        String task_workman = task.getWorkman();
+            putVariables(model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
 
-        putVariables(model, chooseTask_id,  task_name,  task_deadline,  task_status,  task_description,  task_workman);
-
-        return "manager_temp";
+            return "manager_temp";
+        };
     }
 
     @PostMapping("/edit")
-    public String editTask (
+    public Callable<String> editTask (
             @RequestParam(defaultValue = "0") Integer task_id,
             @RequestParam String task_name,
             @RequestParam String task_deadline,
@@ -92,34 +99,37 @@ public class ManagerController {
             @RequestParam String task_description,
             @RequestParam String task_workman,
             Map<String, Object> model) {
+        return () -> {
 
+            if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
+                Task task = findTask(task_id);
+                task.setName(task_name);
+                task.setDeadline(task_deadline);
+                task.setStatus(task_status);
+                task.setDescription(task_description);
+                task.setWorkman(task_workman);
 
-        if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
-            Task task = findTask(task_id);
-            task.setName(task_name);
-            task.setDeadline(task_deadline);
-            task.setStatus(task_status);
-            task.setDescription(task_description);
-            task.setWorkman(task_workman);
+                taskRepo.save(task);
+            }
 
-            taskRepo.save(task);
-        }
+            putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        putVariables(model, 0,  "",  "",  "",  "",  "");
-
-        return "manager_temp";
+            return "manager_temp";
+        };
     }
 
     @PostMapping("/cancel")
-    public String cancelTaskEdition (Map<String, Object> model) {
-        putVariables(model, 0,  "",  "",  "",  "",  "");
+    public Callable<String> cancelTaskEdition (Map<String, Object> model) {
+        return () -> {
+            putVariables(model, 0,  "",  "",  "",  "",  "");
 
-        return "manager_temp";
+            return "manager_temp";
+        };
     }
 
     @PostMapping("/exit")
-    public String goToMain (Map<String, Object> model) {
-        return "redirect:/main";
+    public Callable<String> goToMain (Map<String, Object> model) {
+        return () -> "redirect:/main";
     }
 }
 

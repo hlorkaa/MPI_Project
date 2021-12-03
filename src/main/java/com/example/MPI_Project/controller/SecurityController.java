@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 @Controller
 @RequestMapping("/security")
@@ -61,76 +61,81 @@ public class SecurityController {
     }
 
     @GetMapping
-    public String start(Map<String, Object> model) {
+    public Callable<String> start(Map<String, Object> model) {
+        return () -> {
+            condition_1 = updateCondition(cell_1);
+            condition_2 = updateCondition(cell_2);
+            condition_3 = updateCondition(cell_3);
+            condition_4 = updateCondition(cell_4);
+            condition_5 = updateCondition(cell_5);
 
-        condition_1 = updateCondition(cell_1);
-        condition_2 = updateCondition(cell_2);
-        condition_3 = updateCondition(cell_3);
-        condition_4 = updateCondition(cell_4);
-        condition_5 = updateCondition(cell_5);
-
-        switch (camera_number){
-            case 1:
-                ImageName = buildImageName(cell_1);
-                break;
-            case 2:
-                ImageName = buildImageName(cell_2);
-                break;
-            case 3:
-                ImageName = buildImageName(cell_3);
-                break;
-            case 4:
-                ImageName = buildImageName(cell_4);
-                break;
-            case 5:
-                ImageName = buildImageName(cell_5);
-                break;
-        }
-        //System.out.println(ImageName);
-        model.put("ImageName", ImageName);
-        model.put("condition_1", condition_1);
-        model.put("condition_2", condition_2);
-        model.put("condition_3", condition_3);
-        model.put("condition_4", condition_4);
-        model.put("condition_5", condition_5);
-        model.put("camera_number", camera_number);
-        return "security_temp";
+            switch (camera_number){
+                case 1:
+                    ImageName = buildImageName(cell_1);
+                    break;
+                case 2:
+                    ImageName = buildImageName(cell_2);
+                    break;
+                case 3:
+                    ImageName = buildImageName(cell_3);
+                    break;
+                case 4:
+                    ImageName = buildImageName(cell_4);
+                    break;
+                case 5:
+                    ImageName = buildImageName(cell_5);
+                    break;
+            }
+            //System.out.println(ImageName);
+            model.put("ImageName", ImageName);
+            model.put("condition_1", condition_1);
+            model.put("condition_2", condition_2);
+            model.put("condition_3", condition_3);
+            model.put("condition_4", condition_4);
+            model.put("condition_5", condition_5);
+            model.put("camera_number", camera_number);
+            return "security_temp";
+        };
     }
 
     @PostMapping("/next")
-    public String nextCamera (Map<String, Object> model) {
-        camera_number += 1;
-        if (camera_number > 5) {
-            camera_number = 1;
-        }
-        model.put("ImageName", ImageName);
-        model.put("condition_1", condition_1);
-        model.put("condition_2", condition_2);
-        model.put("condition_3", condition_3);
-        model.put("condition_4", condition_4);
-        model.put("condition_5", condition_5);
-        model.put("camera_number", camera_number);
-        return "redirect:/security";
+    public Callable<String> nextCamera (Map<String, Object> model) {
+        return () -> {
+            camera_number += 1;
+            if (camera_number > 5) {
+                camera_number = 1;
+            }
+            model.put("ImageName", ImageName);
+            model.put("condition_1", condition_1);
+            model.put("condition_2", condition_2);
+            model.put("condition_3", condition_3);
+            model.put("condition_4", condition_4);
+            model.put("condition_5", condition_5);
+            model.put("camera_number", camera_number);
+            return "redirect:/security";
+        };
     }
 
     @PostMapping("/prev")
-    public String prevCamera (Map<String, Object> model) {
-        camera_number -= 1;
-        if (camera_number < 1) {
-            camera_number = 5;
-        }
-        model.put("ImageName", ImageName);
-        model.put("condition_1", condition_1);
-        model.put("condition_2", condition_2);
-        model.put("condition_3", condition_3);
-        model.put("condition_4", condition_4);
-        model.put("condition_5", condition_5);
-        model.put("camera_number", camera_number);
-        return "redirect:/security";
+    public Callable<String> prevCamera (Map<String, Object> model) {
+        return () -> {
+            camera_number -= 1;
+            if (camera_number < 1) {
+                camera_number = 5;
+            }
+            model.put("ImageName", ImageName);
+            model.put("condition_1", condition_1);
+            model.put("condition_2", condition_2);
+            model.put("condition_3", condition_3);
+            model.put("condition_4", condition_4);
+            model.put("condition_5", condition_5);
+            model.put("camera_number", camera_number);
+            return "redirect:/security";
+        };
     }
 
     @PostMapping("/exit")
-    public String goToMain (Map<String, Object> model) {
-        return "redirect:/main";
+    public Callable<String> goToMain (Map<String, Object> model) {
+        return () -> "redirect:/main";
     }
 }
