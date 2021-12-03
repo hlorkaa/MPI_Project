@@ -38,8 +38,8 @@ public class UserService implements UserDetailsService {
         return userFromDb.orElse(new User());
     }
 
-    public Iterable<User> allUsers() {
-        return userRepo.findAll();
+    public List<User> allUsers() {
+        return (List<User>) userRepo.findAll();
     }
 
     public boolean saveUser(User user) {
