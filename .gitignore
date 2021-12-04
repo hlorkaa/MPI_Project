@@ -1,4 +1,5 @@
 .idea
 target/
+out/
 src/main/resources/application.properties
 src/test/java/com/example/MPI_Project/testHelpers/TestUtils.java
