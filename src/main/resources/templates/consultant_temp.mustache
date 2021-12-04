@@ -63,8 +63,8 @@
                 </p>
 
                 <p>
-                    Дата: <input type="date" name="order_date" placeholder="Введите дату" value="{{order_date}}" required>
-                    Дедлайн: <input type="date" name="order_deadline" placeholder="Введите дедлайн" value="{{order_deadline}}" required>
+                    Дата: <input readonly type="text" name="order_date" placeholder="Введите дату" value="{{order_date}}" required>
+                    Дедлайн: <input type="date" min={{today}} name="order_deadline" placeholder="Введите дедлайн" value="{{order_deadline}}" required>
                 </p>
 
                 <p>
@@ -98,7 +98,7 @@
                     <input type="text" name="newOrder_customer" placeholder="Введите заказчика" required>
                 </p>
                 <p>
-                    Дата: <input type="date" min={{today}} max={{today}} name="newOrder_date" placeholder="Введите дату" value={{today}} required>
+                    Дата: <input readonly type="text" name="newOrder_date" placeholder="Введите дату" value={{today}} required>
                     Дедлайн: <input type="date" min={{today}} name="newOrder_deadline" placeholder="Введите дедлайн" required>
                 </p>
 
