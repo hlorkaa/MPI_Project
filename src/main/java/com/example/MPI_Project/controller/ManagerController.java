@@ -23,9 +23,9 @@ public class ManagerController {
 
     public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
         Iterable<Task> tasks = taskRepo.findAll();
-        Iterable<User> workmans = userRepo.findByRole(Role.WORKMAN);
+        Iterable<User> workmen = userRepo.findByRole(Role.WORKMAN);
         model.put("tasks", tasks);
-        model.put("workmans", workmans);
+        model.put("workmen", workmen);
         model.put("task_id", id);
         model.put("task_name", name);
         model.put("task_deadline", deadline);

@@ -77,9 +77,9 @@
                 <p><textarea cols="40" name="task_description" rows="10" placeholder="Введите описание" required>{{task_description}}</textarea></p>
 
                 <select name="newTask_workman" required>
-                    {{#workmans}}
+                    {{#workmen}}
                         <option>{{username}}</option>
-                    {{/workmans}}
+                    {{/workmen}}
                 </select>
 
                 <p>
@@ -114,9 +114,9 @@
                 <p><textarea cols="40" name="newTask_description" rows="10" placeholder="Введите описание" required></textarea></p>
 
                 <select name="newTask_workman" required>
-                    {{#workmans}}
+                    {{#workmen}}
                         <option>{{username}}</option>
-                    {{/workmans}}
+                    {{/workmen}}
                 </select>
                 <p>
                     <input type="submit" value="ОК">
