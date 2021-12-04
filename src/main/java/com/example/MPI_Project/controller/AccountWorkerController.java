@@ -12,6 +12,7 @@ import com.example.MPI_Project.repos.FinancesRepo;
 import com.example.MPI_Project.repos.ReportRepo;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,10 @@ public class AccountWorkerController {
     }
     public void putFinance(Map<String, Object> model, String date, Double amount, String type) {
         Iterable<Finances> finances = financesRepo.findAll();
+
+        String today = LocalDate.now().getYear() +"-"+ LocalDate.now().getMonthValue() +"-"+ (LocalDate.now().getDayOfMonth() < 10 ? "0"+LocalDate.now().getDayOfMonth() : LocalDate.now().getDayOfMonth());
+
+        model.put("today", today);
         model.put("finances", finances);
         model.put("finances_date", date);
         model.put("finances_amount", amount);

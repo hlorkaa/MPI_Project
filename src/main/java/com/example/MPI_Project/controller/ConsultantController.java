@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -59,11 +60,13 @@ public class ConsultantController {
     }
 
     public void putVariables(Map<String, Object> model, Integer id, String name, String customer, String date, String deadline, String quality, Integer quantity, String notes) {
-        Integer flag;
-        if (orderRepo == null)
-            flag = 0;
+        //Integer flag;
+        //if (orderRepo == null)
+        //    flag = 0;
         Iterable<OrderCard> orders = orderRepo.findAll();
-//        Iterable<OrderCard> orders = null;
+        String today = LocalDate.now().getYear() +"-"+ LocalDate.now().getMonthValue() +"-"+ (LocalDate.now().getDayOfMonth() < 10 ? "0"+LocalDate.now().getDayOfMonth() : LocalDate.now().getDayOfMonth());
+
+        model.put("today", today);
         model.put("orders", orders);
         model.put("order_id", id);
         model.put("order_name", name);

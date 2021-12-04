@@ -63,7 +63,7 @@
                 </p>
 
                 <p>
-                    Дедлайн: <input type="date" name="task_deadline" placeholder="Введите дедлайн" value="{{task_deadline}}" required>
+                    Дедлайн: <input type="date" min={{today}} name="task_deadline" placeholder="Введите дедлайн" value="{{task_deadline}}" required>
                 </p>
 
                 <p>
@@ -100,7 +100,7 @@
                     <input type="text" name="newTask_name" placeholder="Введите название" required></p>
 
                 <p>
-                    Дедлайн: <input type="date" name="newTask_deadline" placeholder="Введите дедлайн" required>
+                    Дедлайн: <input type="date" min={{today}} name="newTask_deadline" placeholder="Введите дедлайн" required>
                 </p>
 
                 <p>

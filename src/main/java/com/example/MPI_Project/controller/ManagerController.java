@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 
 @Controller
 @RequestMapping("/manager")
@@ -24,6 +26,9 @@ public class ManagerController {
     public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
         Iterable<Task> tasks = taskRepo.findAll();
         Iterable<User> workmen = userRepo.findByRole(Role.WORKMAN);
+        String today = LocalDate.now().getYear() +"-"+ LocalDate.now().getMonthValue() +"-"+ (LocalDate.now().getDayOfMonth() < 10 ? "0"+LocalDate.now().getDayOfMonth() : LocalDate.now().getDayOfMonth());
+
+        model.put("today", today);
         model.put("tasks", tasks);
         model.put("workmen", workmen);
         model.put("task_id", id);
