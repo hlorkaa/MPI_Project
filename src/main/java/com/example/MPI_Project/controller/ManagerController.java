@@ -1,7 +1,10 @@
 package com.example.MPI_Project.controller;
 
+import com.example.MPI_Project.domain.Role;
 import com.example.MPI_Project.domain.Task;
+import com.example.MPI_Project.domain.User;
 import com.example.MPI_Project.repos.TaskRepo;
+import com.example.MPI_Project.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +18,14 @@ public class ManagerController {
     @Autowired
     private TaskRepo taskRepo;
 
+    @Autowired
+    private UserRepo userRepo;
+
     public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
         Iterable<Task> tasks = taskRepo.findAll();
+        Iterable<User> workmans = userRepo.findByRole(Role.WORKMAN);
         model.put("tasks", tasks);
+        model.put("workmans", workmans);
         model.put("task_id", id);
         model.put("task_name", name);
         model.put("task_deadline", deadline);

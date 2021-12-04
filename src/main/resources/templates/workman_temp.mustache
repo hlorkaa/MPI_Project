@@ -50,9 +50,9 @@
 
             <form action="/workman/edit" method="post">
                 <p>
-                    <input type="hidden" name="task_id" value="{{task_id}}">
-                    <input readonly type="text" name="task_name" placeholder="" value="{{task_name}}">
-                    <input readonly type="text" name="task_deadline" placeholder="" value="{{task_deadline}}">
+                    <input type="hidden" name="task_id" value="{{task_id}}" required>
+                    <input readonly type="text" name="task_name" placeholder="" value="{{task_name}}" required>
+                    <input readonly type="text" name="task_deadline" placeholder="" value="{{task_deadline}}" required>
                 </p>
 
                 <p>
@@ -61,9 +61,9 @@
                     <input type="radio" id="taskStatus_problems" name="task_status" value="Возникли проблемы"><label for="taskStatus_problems">Возникли проблемы</label>
                 </p>
 
-                <p><textarea cols="40" name="task_description" rows="10" placeholder="" readonly>{{task_description}}</textarea></p>
+                <p><textarea cols="40" name="task_description" rows="10" placeholder="" readonly required>{{task_description}}</textarea></p>
 
-                <p><input readonly type="text" name="task_workman" placeholder="" value="{{task_workman}}"></p>
+                <p><input readonly type="text" name="task_workman" placeholder="" value="{{task_workman}}" required></p>
 
                 <p>
                     <input type="submit" value="ОК">

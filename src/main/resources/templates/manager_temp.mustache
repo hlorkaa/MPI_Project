@@ -57,13 +57,13 @@
 
             <form action="/manager/edit" method="post">
 
-                <input type="hidden" name="task_id" value="{{task_id}}">
+                <input type="hidden" name="task_id" value="{{task_id}}" required>
                 <p>
-                    <input style="white-space: nowrap;" type="text" name="task_name" placeholder="Введите название" value="{{task_name}}">
+                    <input style="white-space: nowrap;" type="text" name="task_name" placeholder="Введите название" value="{{task_name}}" required>
                 </p>
 
                 <p>
-                    Дедлайн: <input type="date" name="task_deadline" placeholder="Введите дедлайн" value="{{task_deadline}}">
+                    Дедлайн: <input type="date" name="task_deadline" placeholder="Введите дедлайн" value="{{task_deadline}}" required>
                 </p>
 
                 <p>
@@ -74,9 +74,13 @@
                     <input type="radio" id="taskStatus_stopped" name="task_status" value="Приостановлено"><label for="taskStatus_stopped">Приостановлено</label>
                 </p>
 
-                <p><textarea cols="40" name="task_description" rows="10" placeholder="Введите описание">{{task_description}}</textarea></p>
+                <p><textarea cols="40" name="task_description" rows="10" placeholder="Введите описание" required>{{task_description}}</textarea></p>
 
-                <p><input type="text" name="task_workman" placeholder="Введите исполнителя" value="{{task_workman}}"></p>
+                <select name="newTask_workman" required>
+                    {{#workmans}}
+                        <option>{{username}}</option>
+                    {{/workmans}}
+                </select>
 
                 <p>
                     <input type="submit" value="ОК">
@@ -93,10 +97,10 @@
 
             <form action="/manager/create" method="post">
                 <p>
-                    <input type="text" name="newTask_name" placeholder="Введите название"></p>
+                    <input type="text" name="newTask_name" placeholder="Введите название" required></p>
 
                 <p>
-                    Дедлайн: <input type="date" name="newTask_deadline" placeholder="Введите дедлайн">
+                    Дедлайн: <input type="date" name="newTask_deadline" placeholder="Введите дедлайн" required>
                 </p>
 
                 <p>
@@ -107,10 +111,13 @@
                     <input type="radio" id="taskStatus_stopped" name="newTask_status" value="Приостановлено"><label for="taskStatus_stopped">Приостановлено</label>
                 </p>
 
-                <p><textarea cols="40" name="newTask_description" rows="10" placeholder="Введите описание"></textarea></p>
+                <p><textarea cols="40" name="newTask_description" rows="10" placeholder="Введите описание" required></textarea></p>
 
-                <p><input type="text" name="newTask_workman" placeholder="Введите исполнителя"></p>
-
+                <select name="newTask_workman" required>
+                    {{#workmans}}
+                        <option>{{username}}</option>
+                    {{/workmans}}
+                </select>
                 <p>
                     <input type="submit" value="ОК">
                     <input type="reset" value="Отмена">

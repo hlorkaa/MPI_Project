@@ -57,14 +57,14 @@
 
             <form action="/consultant/edit" method="post">
                 <p>
-                    <input type="hidden" name="order_id" value="{{order_id}}">
-                    <input type="text" name="order_name" placeholder="Введите название" value="{{order_name}}">
-                    <input type="text" name="order_customer" placeholder="Введите заказчика" value="{{order_customer}}">
+                    <input type="hidden" name="order_id" value="{{order_id}}" required>
+                    <input type="text" name="order_name" placeholder="Введите название" value="{{order_name}}" required>
+                    <input type="text" name="order_customer" placeholder="Введите заказчика" value="{{order_customer}}" required>
                 </p>
 
                 <p>
-                    Дата: <input type="date" name="order_date" placeholder="Введите дату" value="{{order_date}}">
-                    Дедлайн: <input type="date" name="order_deadline" placeholder="Введите дедлайн" value="{{order_deadline}}">
+                    Дата: <input type="date" name="order_date" placeholder="Введите дату" value="{{order_date}}" required>
+                    Дедлайн: <input type="date" name="order_deadline" placeholder="Введите дедлайн" value="{{order_deadline}}" required>
                 </p>
 
                 <p>
@@ -74,10 +74,10 @@
                 </p>
 
                 <p>
-                    <input type="number" min="1" name="order_quantity" placeholder="Введите количество" value="{{order_quantity}}">
+                    <input type="number" min="1" name="order_quantity" placeholder="Введите количество" value="{{order_quantity}}" required>
                 </p>
 
-                <p><textarea cols="40" name="order_notes" rows="5" placeholder="Введите примечания">{{order_notes}}</textarea></p>
+                <p><textarea cols="40" name="order_notes" rows="5" placeholder="Введите примечания" required>{{order_notes}}</textarea></p>
 
                 <p>
                     <input type="submit" value="ОК">
@@ -94,12 +94,12 @@
 
             <form action="/consultant/create" method="post">
                 <p>
-                    <input type="text" name="newOrder_name" placeholder="Введите название">
-                    <input type="text" name="newOrder_customer" placeholder="Введите заказчика">
+                    <input type="text" name="newOrder_name" placeholder="Введите название" required>
+                    <input type="text" name="newOrder_customer" placeholder="Введите заказчика" required>
                 </p>
                 <p>
-                    Дата: <input type="date" name="newOrder_date" placeholder="Введите дату">
-                    Дедлайн: <input type="date" name="newOrder_deadline" placeholder="Введите дедлайн">
+                    Дата: <input type="date" name="newOrder_date" placeholder="Введите дату" required>
+                    Дедлайн: <input type="date" name="newOrder_deadline" placeholder="Введите дедлайн" required>
                 </p>
 
                 <p>
@@ -109,10 +109,10 @@
                 </p>
 
                 <p>
-                    <input type="number" min="1" name="newOrder_quantity" placeholder="Введите количество">
+                    <input type="number" min="1" name="newOrder_quantity" placeholder="Введите количество" required>
                 </p>
 
-                <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания"></textarea></p>
+                <p><textarea cols="40" name="newOrder_notes" rows="5" placeholder="Введите примечания" required></textarea></p>
 
                 <p>
                     <input type="submit" value="ОК">
