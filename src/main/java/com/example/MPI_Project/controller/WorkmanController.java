@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -21,6 +22,9 @@ public class WorkmanController {
     @Autowired
     private TaskRepo taskRepo;
     private SecurityHelper secHelper;
+    private int startTaskList = 0;
+    private int endTaskList = 100;
+
 
     @PostConstruct
     public void initialize() {
@@ -30,7 +34,19 @@ public class WorkmanController {
     public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
 
         String workmanName = secHelper.userName();
-        Iterable<Task> tasks = taskRepo.findByWorkman(workmanName);
+        List<Task> tasks = taskRepo.findByWorkman(workmanName);
+
+        if (startTaskList < 0) {
+            startTaskList = 0;
+            endTaskList = 100;
+        }
+        if (startTaskList >= tasks.size()) {
+            startTaskList = startTaskList - 100;
+            endTaskList = endTaskList - 100;
+        }
+
+        tasks = tasks.subList(startTaskList, Math.min(tasks.size() - 1, endTaskList));
+
         model.put("tasks", tasks);
         model.put("task_id", id);
         model.put("task_name", name);
@@ -49,6 +65,26 @@ public class WorkmanController {
             @RequestParam(name="workman_name", required=false, defaultValue="") String workman_name,
             Map<String, Object> model) {
         return () -> {
+            putVariables(model, 0,  "",  "",  "",  "",  "");
+            return "workman_temp";
+        };
+    }
+
+    @PostMapping("/next")
+    public Callable<String> nextTaskList (Map<String, Object> model) {
+        return () -> {
+            startTaskList = startTaskList + 100;
+            endTaskList = endTaskList + 100;
+            putVariables(model, 0,  "",  "",  "",  "",  "");
+            return "workman_temp";
+        };
+    }
+
+    @PostMapping("/prev")
+    public Callable<String> prevTaskList (Map<String, Object> model) {
+        return () -> {
+            startTaskList = startTaskList - 100;
+            endTaskList = endTaskList - 100;
             putVariables(model, 0,  "",  "",  "",  "",  "");
             return "workman_temp";
         };

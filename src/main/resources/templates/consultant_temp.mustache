@@ -8,7 +8,14 @@
     </tr>
     <tr>
         <td colspan="2">
-            <p><strong>Текущие заказы</strong></p>
+            <strong>Текущие заказы</strong>
+            <form style="display: inline-block" action="/consultant/prev" method="post">
+                <input type="submit" value="<-">
+            </form>
+            <form style="display: inline-block" action="/consultant/next" method="post">
+                <input type="submit" value="->">
+            </form>
+
             <div class="colOrder">
                 <table>
                     <thead>

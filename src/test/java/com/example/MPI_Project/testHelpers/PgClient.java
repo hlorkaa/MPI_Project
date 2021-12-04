@@ -53,7 +53,7 @@ public class PgClient implements Closeable {
     public void writeOrderTableVolumeTestData(long countRows) {
         for (long i = 0; i<countRows; i++){
             writeOrderTableTestData("Тестовый заказ", "Иванов И.И.", "2021-11-08", "2021-11-18", "Обычное", 10, "Примечания тестового заказа.");
-            if (i % 10000 == 0) {
+            if (i % 1000 == 0) {
                 System.out.println("Filling " + ORDER_TABLE_NAME + " complete on " + i * 100 / countRows + "%");
             }
             if (i == countRows-1) {
@@ -65,7 +65,7 @@ public class PgClient implements Closeable {
     public void writeTaskTableVolumeTestData(long countRows) {
         for (long i = 0; i<countRows; i++){
             writeTaskTableTestData("Тестовая задача", "2021-11-29", "Утверждено", "Тестовое описание задачи.", "admin");
-            if (i % 10000 == 0) {
+            if (i % 1000 == 0) {
                 System.out.println("Filling " + TASK_TABLE_NAME + " complete on " + i * 100 / countRows + "%");
             }
             if (i == countRows-1) {

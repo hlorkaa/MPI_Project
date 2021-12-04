@@ -8,7 +8,13 @@
     </tr>
     <tr>
         <td colspan="2">
-            <p><strong>Текущие задачи</strong></p>
+            <strong>Текущие задачи</strong>
+            <form style="display: inline-block" action="/workman/prev" method="post">
+                <input type="submit" value="<-">
+            </form>
+            <form style="display: inline-block" action="/workman/next" method="post">
+                <input type="submit" value="->">
+            </form>
             <div class="colTask">
                 <table>
                     <thead>

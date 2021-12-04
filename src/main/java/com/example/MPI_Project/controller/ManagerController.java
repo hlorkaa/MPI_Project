@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -22,11 +23,24 @@ public class ManagerController {
 
     @Autowired
     private UserRepo userRepo;
+    private int startTaskList = 0;
+    private int endTaskList = 100;
 
     public void putVariables(Map<String, Object> model, Integer id, String name, String deadline, String status, String description, String workman) {
-        Iterable<Task> tasks = taskRepo.findAll();
+        List<Task> tasks = (List<Task>) taskRepo.findAll();
         Iterable<User> workmen = userRepo.findByRole(Role.WORKMAN);
         String today = LocalDate.now().getYear() +"-"+ LocalDate.now().getMonthValue() +"-"+ (LocalDate.now().getDayOfMonth() < 10 ? "0"+LocalDate.now().getDayOfMonth() : LocalDate.now().getDayOfMonth());
+
+        if (startTaskList < 0) {
+            startTaskList = 0;
+            endTaskList = 100;
+        }
+        if (startTaskList >= tasks.size()) {
+            startTaskList = startTaskList - 100;
+            endTaskList = endTaskList - 100;
+        }
+
+        tasks = tasks.subList(startTaskList, Math.min(tasks.size() - 1, endTaskList));
 
         model.put("today", today);
         model.put("tasks", tasks);
@@ -48,6 +62,26 @@ public class ManagerController {
         return () -> {
             putVariables(model, 0,  "",  "",  "",  "",  "");
 
+            return "manager_temp";
+        };
+    }
+
+    @PostMapping("/next")
+    public Callable<String> nextTaskList (Map<String, Object> model) {
+        return () -> {
+            startTaskList = startTaskList + 100;
+            endTaskList = endTaskList + 100;
+            putVariables(model, 0,  "",  "",  "",  "",  "");
+            return "manager_temp";
+        };
+    }
+
+    @PostMapping("/prev")
+    public Callable<String> prevTaskList (Map<String, Object> model) {
+        return () -> {
+            startTaskList = startTaskList - 100;
+            endTaskList = endTaskList - 100;
+            putVariables(model, 0,  "",  "",  "",  "",  "");
             return "manager_temp";
         };
     }

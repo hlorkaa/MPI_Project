@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -19,6 +20,8 @@ public class ConsultantController {
     private OrderRepo orderRepo;
     @Autowired
     private FinancesRepo financesRepo;
+    private int startOrderList = 0;
+    private int endOrderList = 100;
 
     public void pushToFinances(String date, String oldQuality, Integer oldQuantity, String newQuality, Integer newQuantity) {
         Double amount;
@@ -63,8 +66,19 @@ public class ConsultantController {
         //Integer flag;
         //if (orderRepo == null)
         //    flag = 0;
-        Iterable<OrderCard> orders = orderRepo.findAll();
+        List<OrderCard> orders = (List<OrderCard>) orderRepo.findAll();
         String today = LocalDate.now().getYear() +"-"+ LocalDate.now().getMonthValue() +"-"+ (LocalDate.now().getDayOfMonth() < 10 ? "0"+LocalDate.now().getDayOfMonth() : LocalDate.now().getDayOfMonth());
+
+        if (startOrderList < 0) {
+            startOrderList = 0;
+            endOrderList = 100;
+        }
+        if (startOrderList >= orders.size()) {
+            startOrderList = startOrderList - 100;
+            endOrderList = endOrderList - 100;
+        }
+
+        orders = orders.subList(startOrderList, Math.min(orders.size() - 1, endOrderList));
 
         model.put("today", today);
         model.put("orders", orders);
@@ -87,6 +101,26 @@ public class ConsultantController {
         return () -> {
             putVariables(model, 0, "", "", "", "", "", 0, "");
 
+            return "consultant_temp";
+        };
+    }
+
+    @PostMapping("/next")
+    public Callable<String> nextOrderList (Map<String, Object> model) {
+        return () -> {
+            startOrderList = startOrderList + 100;
+            endOrderList = endOrderList + 100;
+            putVariables(model, 0, "", "", "", "", "", 0, "");
+            return "consultant_temp";
+        };
+    }
+
+    @PostMapping("/prev")
+    public Callable<String> prevOrderList (Map<String, Object> model) {
+        return () -> {
+            startOrderList = startOrderList - 100;
+            endOrderList = endOrderList - 100;
+            putVariables(model, 0, "", "", "", "", "", 0, "");
             return "consultant_temp";
         };
     }
