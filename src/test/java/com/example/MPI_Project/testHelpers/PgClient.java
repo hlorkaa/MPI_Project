@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 import static java.util.Objects.isNull;
 
@@ -51,8 +52,9 @@ public class PgClient implements Closeable {
     }
 
     public void writeOrderTableVolumeTestData(long countRows) {
+        String today = LocalDate.now().getYear() +"-"+ LocalDate.now().getMonthValue() +"-"+ (LocalDate.now().getDayOfMonth() < 10 ? "0"+LocalDate.now().getDayOfMonth() : LocalDate.now().getDayOfMonth());
         for (long i = 0; i<countRows; i++){
-            writeOrderTableTestData("Тестовый заказ", "Иванов И.И.", "2021-11-08", "2021-11-18", "Обычное", 10, "Примечания тестового заказа.");
+            writeOrderTableTestData("Тестовый заказ", "Иванов И.И.", today, "2021-12-31", "Обычное", 10, "Примечания тестового заказа.");
             if (i % 1000 == 0) {
                 System.out.println("Filling " + ORDER_TABLE_NAME + " complete on " + i * 100 / countRows + "%");
             }
@@ -64,7 +66,7 @@ public class PgClient implements Closeable {
 
     public void writeTaskTableVolumeTestData(long countRows) {
         for (long i = 0; i<countRows; i++){
-            writeTaskTableTestData("Тестовая задача", "2021-11-29", "Утверждено", "Тестовое описание задачи.", "admin");
+            writeTaskTableTestData("Тестовая задача", "2021-12-29", "Утверждено", "Тестовое описание задачи.", "admin");
             if (i % 1000 == 0) {
                 System.out.println("Filling " + TASK_TABLE_NAME + " complete on " + i * 100 / countRows + "%");
             }
@@ -119,25 +121,6 @@ public class PgClient implements Closeable {
         writeUserTableTestData("consultant", "consultant", Role.CONSULTANT);
         writeUserTableTestData("security", "security", Role.SECURITY);
         writeUserTableTestData("account", "account", Role.ACCOUNT);
-    }
-
-    public void writeTaskTableData(String name, String deadline, String status, String description, String workman) {
-        try {
-            String TEST_DATA_INSERT_QUERY = String.format("INSERT INTO %s " +
-                    "(id, deadline, description, name, status, workman) " +
-                    "VALUES (?, ?, ?, ?, ?, ?)", TASK_TABLE_NAME);
-            try (PreparedStatement st = connection.prepareStatement(TEST_DATA_INSERT_QUERY)) {
-                st.setInt(1, 1000);
-                st.setString(2, deadline);
-                st.setString(3, description);
-                st.setString(4, name);
-                st.setString(5, status);
-                st.setString(6, workman);
-                st.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void writeUserTableTestData(String username, String password, Role role) {
