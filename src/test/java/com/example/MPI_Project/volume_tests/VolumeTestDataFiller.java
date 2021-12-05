@@ -8,8 +8,8 @@ public class VolumeTestDataFiller {
     public static void main(String[] args) throws InterruptedException {
         truncate("task");
         truncate("order");
-        writeTestData(100000, 25, "task");
-        writeTestData(100000, 25, "order");
+        writeTestData(10000, 25, "task");
+        writeTestData(10000, 25, "order");
     }
 
     private static void writeTestData(int num, int threadCount, String entityName) throws InterruptedException {

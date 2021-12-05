@@ -34,14 +34,21 @@ public class WorkmanInterfaceTest {
     @Test
     public void basicInterfaceTest() {
         driver.findElement(By.name("task_workButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Сотрудник"));
-        driver.findElement(By.cssSelector("tr:nth-child(2) p")).click();
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(2) strong")).getText(), is("Текущие задачи"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Сотрудник"));
         {
             String value = driver.findElement(By.name("exitButton")).getAttribute("value");
             assertThat(value, is("Выход"));
+        }
+        driver.findElement(By.cssSelector("td > strong")).click();
+        assertThat(driver.findElement(By.cssSelector("td > strong")).getText(), is("Текущие задачи"));
+        {
+            String value = driver.findElement(By.cssSelector("form:nth-child(2) > input")).getAttribute("value");
+            assertThat(value, is("<-"));
+        }
+        {
+            String value = driver.findElement(By.cssSelector("form:nth-child(3) > input")).getAttribute("value");
+            assertThat(value, is("->"));
         }
         driver.findElement(By.cssSelector("th:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("th:nth-child(1)")).getText(), is("ИД"));
@@ -75,7 +82,7 @@ public class WorkmanInterfaceTest {
         driver.findElement(By.name("task_deadline")).click();
         {
             String value = driver.findElement(By.name("task_deadline")).getAttribute("value");
-            assertThat(value, is("2021-12-05"));
+            assertThat(value, is("2021-12-30"));
         }
         driver.findElement(By.name("task_name")).click();
         {
@@ -92,7 +99,7 @@ public class WorkmanInterfaceTest {
             assertThat(value, is("ОК"));
         }
         {
-            String value = driver.findElement(By.cssSelector("form:nth-child(3) input")).getAttribute("value");
+            String value = driver.findElement(By.cssSelector("form:nth-child(3) > p > input")).getAttribute("value");
             assertThat(value, is("Отмена"));
         }
         {

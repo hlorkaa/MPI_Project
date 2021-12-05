@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -78,7 +79,9 @@ public class ConsultantController {
             endOrderList = endOrderList - 100;
         }
 
-        orders = orders.subList(startOrderList, Math.min(orders.size() - 1, endOrderList));
+        if (!orders.isEmpty()) {
+            orders = orders.subList(startOrderList, Math.min(orders.size(), endOrderList));
+        }
 
         model.put("today", today);
         model.put("orders", orders);

@@ -10,20 +10,14 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import static org.hamcrest.CoreMatchers.is;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import static org.junit.Assert.assertThat;
 
 public class AdminFunctionalTest {
     private WebDriver driver;
-    Wait<WebDriver> wait;
 
     @Before
     public void setUp() {
         driver = TestUtils.getDriver();
-        wait = new WebDriverWait(driver, 5, 1000);
     }
 
     @After

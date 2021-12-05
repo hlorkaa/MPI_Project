@@ -45,7 +45,9 @@ public class WorkmanController {
             endTaskList = endTaskList - 100;
         }
 
-        tasks = tasks.subList(startTaskList, Math.min(tasks.size() - 1, endTaskList));
+        if (!tasks.isEmpty()) {
+            tasks = tasks.subList(startTaskList, Math.min(tasks.size(), endTaskList));
+        }
 
         model.put("tasks", tasks);
         model.put("task_id", id);

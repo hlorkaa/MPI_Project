@@ -36,22 +36,30 @@ public class ManagerInterfaceTest {
         driver.findElement(By.name("task_managButton")).click();
         driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Управляющий"));
-        driver.findElement(By.cssSelector("tr:nth-child(2) p")).click();
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(2) strong")).getText(), is("Текущие задачи"));
+        {
+            String value = driver.findElement(By.name("exitButton")).getAttribute("value");
+            assertThat(value, is("Выход"));
+        }
+        driver.findElement(By.cssSelector("td > strong")).click();
+        assertThat(driver.findElement(By.cssSelector("td > strong")).getText(), is("Текущие задачи"));
+        {
+            String value = driver.findElement(By.cssSelector("tr:nth-child(2) form:nth-child(2) > input")).getAttribute("value");
+            assertThat(value, is("<-"));
+        }
+        {
+            String value = driver.findElement(By.cssSelector("form:nth-child(3) > input")).getAttribute("value");
+            assertThat(value, is("->"));
+        }
         driver.findElement(By.cssSelector("th:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("th:nth-child(1)")).getText(), is("ИД"));
         driver.findElement(By.cssSelector("th:nth-child(2)")).click();
         assertThat(driver.findElement(By.cssSelector("th:nth-child(2)")).getText(), is("Наименование"));
         driver.findElement(By.cssSelector("th:nth-child(3)")).click();
         assertThat(driver.findElement(By.cssSelector("th:nth-child(3)")).getText(), is("Статус"));
-        {
-            String value = driver.findElement(By.name("exitButton")).getAttribute("value");
-            assertThat(value, is("Выход"));
-        }
-        driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask:nth-child(2)")).click();
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) span")).getText(), is("Отредактированная задача"));
-        driver.findElement(By.cssSelector("tr:nth-child(1) i")).click();
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) i")).getText(), is("Возникли проблемы"));
+        driver.findElement(By.cssSelector("span")).click();
+        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("Отредактированная задача"));
+        driver.findElement(By.cssSelector(".colTask:nth-child(3)")).click();
+        assertThat(driver.findElement(By.cssSelector("i")).getText(), is("Возникли проблемы"));
         assertThat(driver.findElement(By.name("task_deleteButton")).getText(), is("Удалить"));
         assertThat(driver.findElement(By.name("task_changeButton")).getText(), is("Просмотр и редактирование"));
     }
@@ -91,12 +99,6 @@ public class ManagerInterfaceTest {
             Boolean isEditable = element.isEnabled() && element.getAttribute("readonly") == null;
             assertTrue(isEditable);
         }
-        driver.findElement(By.name("newTask_workman")).click();
-        {
-            WebElement element = driver.findElement(By.name("newTask_workman"));
-            Boolean isEditable = element.isEnabled() && element.getAttribute("readonly") == null;
-            assertTrue(isEditable);
-        }
         driver.findElement(By.name("newTask_name")).click();
         {
             WebElement element = driver.findElement(By.name("newTask_name"));
@@ -114,23 +116,20 @@ public class ManagerInterfaceTest {
         driver.findElement(By.name("task_managButton")).click();
         driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask .colTask")).click();
         driver.findElement(By.name("task_changeButton")).click();
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(3) > td:nth-child(1) strong")).getText(), is("Редактировать задачу"));
+        driver.findElement(By.cssSelector("td:nth-child(1) > p")).click();
+        assertThat(driver.findElement(By.cssSelector("td:nth-child(1) > p > strong")).getText(), is("Редактировать задачу"));
         driver.findElement(By.name("task_name")).click();
         {
             String value = driver.findElement(By.name("task_name")).getAttribute("value");
             assertThat(value, is("Отредактированная задача"));
         }
-        driver.findElement(By.name("task_deadline")).click();
-        driver.findElement(By.cssSelector("td:nth-child(1) > form:nth-child(2)")).click();
+        driver.findElement(By.cssSelector("td:nth-child(1) p:nth-child(3)")).click();
+        assertThat(driver.findElement(By.cssSelector("td:nth-child(1) p:nth-child(3)")).getText(), is("Дедлайн:"));
         driver.findElement(By.name("task_deadline")).click();
         {
             String value = driver.findElement(By.name("task_deadline")).getAttribute("value");
-            assertThat(value, is("2021-12-05"));
+            assertThat(value, is("2021-12-30"));
         }
-        driver.findElement(By.cssSelector("td:nth-child(1) p:nth-child(3)")).click();
-        assertThat(driver.findElement(By.cssSelector("td:nth-child(1) p:nth-child(3)")).getText(), is("Дедлайн:"));
-        driver.findElement(By.cssSelector("td:nth-child(1) > form:nth-child(2)")).click();
-        driver.findElement(By.cssSelector("p:nth-child(4) > label:nth-child(2)")).click();
         assertThat(driver.findElement(By.cssSelector("p:nth-child(4) > label:nth-child(2)")).getText(), is("Утверждено"));
         assertTrue(driver.findElement(By.id("taskStatus_submitted")).isSelected());
         assertThat(driver.findElement(By.cssSelector("p:nth-child(4) > label:nth-child(4)")).getText(), is("Готово"));
@@ -146,31 +145,18 @@ public class ManagerInterfaceTest {
             String value = driver.findElement(By.name("task_description")).getAttribute("value");
             assertThat(value, is("Отредактированное описание тестовой задачи"));
         }
-        driver.findElement(By.name("task_workman")).click();
         {
-            String value = driver.findElement(By.name("task_workman")).getAttribute("value");
-            assertThat(value, is("workman"));
-        }
-        {
-            WebElement element = driver.findElement(By.name("task_description"));
+            WebElement element = driver.findElement(By.name("task_name"));
             Boolean isEditable = element.isEnabled() && element.getAttribute("readonly") == null;
             assertTrue(isEditable);
         }
-        driver.findElement(By.name("task_deadline")).click();
         {
             WebElement element = driver.findElement(By.name("task_deadline"));
             Boolean isEditable = element.isEnabled() && element.getAttribute("readonly") == null;
             assertTrue(isEditable);
         }
-        driver.findElement(By.name("task_workman")).click();
         {
-            WebElement element = driver.findElement(By.name("task_workman"));
-            Boolean isEditable = element.isEnabled() && element.getAttribute("readonly") == null;
-            assertTrue(isEditable);
-        }
-        driver.findElement(By.name("task_name")).click();
-        {
-            WebElement element = driver.findElement(By.name("task_name"));
+            WebElement element = driver.findElement(By.name("task_description"));
             Boolean isEditable = element.isEnabled() && element.getAttribute("readonly") == null;
             assertTrue(isEditable);
         }
@@ -179,10 +165,9 @@ public class ManagerInterfaceTest {
             assertThat(value, is("ОК"));
         }
         {
-            String value = driver.findElement(By.cssSelector("form:nth-child(3) input")).getAttribute("value");
+            String value = driver.findElement(By.cssSelector("form:nth-child(3) > p > input")).getAttribute("value");
             assertThat(value, is("Отмена"));
         }
-        driver.findElement(By.cssSelector("form:nth-child(3) input")).click();
     }
 
 }

@@ -4,13 +4,19 @@ import com.example.MPI_Project.testHelpers.AuthTestHelper;
 import com.example.MPI_Project.testHelpers.TestUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ManagerFunctionalTest {
     private WebDriver driver;
 
@@ -34,52 +40,185 @@ public class ManagerFunctionalTest {
         while(!driver.findElements(By.cssSelector("span")).isEmpty()){
             driver.findElement(By.name("task_deleteButton")).click();
         }
-        driver.findElement(By.cssSelector("tr:nth-child(3) > td:nth-child(2)")).click();
         driver.findElement(By.name("newTask_name")).click();
         driver.findElement(By.name("newTask_name")).sendKeys("Тестовая задача");
         driver.findElement(By.name("newTask_deadline")).click();
-        driver.findElement(By.name("newTask_deadline")).sendKeys("2021-12-03");
+        driver.findElement(By.name("newTask_deadline")).sendKeys("2021-12-31");
         driver.findElement(By.cssSelector("p:nth-child(3) > #taskStatus_wip")).click();
         driver.findElement(By.name("newTask_description")).click();
         driver.findElement(By.name("newTask_description")).sendKeys("Описание тестовой задачи");
-        driver.findElement(By.name("newTask_workman")).click();
-        driver.findElement(By.name("newTask_workman")).sendKeys("workman");
-        driver.findElement(By.name("newTask_description")).click();
-        driver.findElement(By.name("newTask_description")).click();
-        driver.findElement(By.name("newTask_description")).click();
-        driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(6) > input:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5) > option")).click();
+        driver.findElement(By.cssSelector("p:nth-child(6) > input:nth-child(1)")).click();
         driver.findElement(By.cssSelector("span")).click();
         assertThat(driver.findElement(By.cssSelector("span")).getText(), is("Тестовая задача"));
         driver.findElement(By.cssSelector("i")).click();
         assertThat(driver.findElement(By.cssSelector("i")).getText(), is("Выполняется"));
-        driver.findElement(By.cssSelector("td > .colTask")).click();
     }
 
     @Test
     public void editTask() {
         driver.findElement(By.name("task_managButton")).click();
-        driver.findElement(By.cssSelector("tr > .colTask:nth-child(2)")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("Тестовая задача"));
-        driver.findElement(By.cssSelector(".colTask:nth-child(3)")).click();
-        assertThat(driver.findElement(By.cssSelector("i")).getText(), is("Выполняется"));
         driver.findElement(By.name("task_changeButton")).click();
         driver.findElement(By.name("task_name")).click();
         driver.findElement(By.name("task_name")).clear();
         driver.findElement(By.name("task_name")).sendKeys("Отредактированная задача");
+        driver.findElement(By.name("task_deadline")).click();
+        driver.findElement(By.name("task_deadline")).sendKeys("2021-12-30");
         driver.findElement(By.id("taskStatus_stopped")).click();
         driver.findElement(By.name("task_description")).click();
-        driver.findElement(By.name("task_description")).click();
-        driver.findElement(By.name("task_deadline")).click();
         driver.findElement(By.name("task_description")).clear();
         driver.findElement(By.name("task_description")).sendKeys("Отредактированное описание тестовой задачи");
-        driver.findElement(By.name("task_deadline")).click();
-        driver.findElement(By.name("task_deadline")).sendKeys("2021-12-05");
+        driver.findElement(By.name("newTask_workman")).click();
+        driver.findElement(By.cssSelector("select:nth-child(6) > option")).click();
         driver.findElement(By.cssSelector("p:nth-child(7) > input")).click();
         driver.findElement(By.cssSelector("tr > .colTask:nth-child(2)")).click();
         assertThat(driver.findElement(By.cssSelector("span")).getText(), is("Отредактированная задача"));
-        driver.findElement(By.cssSelector("i")).click();
+        driver.findElement(By.cssSelector(".colTask:nth-child(3)")).click();
         assertThat(driver.findElement(By.cssSelector("i")).getText(), is("Приостановлено"));
-        driver.findElement(By.cssSelector("th:nth-child(3)")).click();
+    }
+
+    @Test
+    public void createTaskEmptyTaskName() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("newTask_name")).click();
+        driver.findElement(By.name("newTask_name")).clear();
+        driver.findElement(By.name("newTask_deadline")).click();
+        driver.findElement(By.name("newTask_deadline")).sendKeys("2021-12-31");
+        driver.findElement(By.cssSelector("p:nth-child(3) > #taskStatus_wip")).click();
+        driver.findElement(By.name("newTask_description")).click();
+        driver.findElement(By.name("newTask_description")).sendKeys("Описание тестовой задачи");
+        driver.findElement(By.cssSelector("select:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5) > option")).click();
+        driver.findElement(By.cssSelector("p:nth-child(6) > input:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(6) > input:nth-child(1)")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector("tr:nth-child(2) > .colOrder > span"));
+            assert(elements.size() == 0);
+        }
+    }
+
+    @Test
+    public void createTaskEmptyTaskDeadline() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("newTask_name")).click();
+        driver.findElement(By.name("newTask_name")).sendKeys("Тестовая задача");
+        driver.findElement(By.name("newTask_deadline")).click();
+        driver.findElement(By.name("newTask_deadline")).clear();
+        driver.findElement(By.cssSelector("p:nth-child(3) > #taskStatus_wip")).click();
+        driver.findElement(By.name("newTask_description")).click();
+        driver.findElement(By.name("newTask_description")).sendKeys("Описание тестовой задачи");
+        driver.findElement(By.cssSelector("select:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5) > option")).click();
+        driver.findElement(By.cssSelector("p:nth-child(6) > input:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(6) > input:nth-child(1)")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector("tr:nth-child(2) > .colOrder > span"));
+            assert(elements.size() == 0);
+        }
+    }
+
+    @Test
+    public void createTaskWrongTaskDeadline() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("newTask_name")).click();
+        driver.findElement(By.name("newTask_name")).sendKeys("Тестовая задача");
+        driver.findElement(By.name("newTask_deadline")).click();
+        driver.findElement(By.name("newTask_deadline")).clear();
+        driver.findElement(By.name("newTask_deadline")).sendKeys("2021-10-30");
+        driver.findElement(By.cssSelector("p:nth-child(3) > #taskStatus_wip")).click();
+        driver.findElement(By.name("newTask_description")).click();
+        driver.findElement(By.name("newTask_description")).sendKeys("Описание тестовой задачи");
+        driver.findElement(By.cssSelector("select:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5) > option")).click();
+        driver.findElement(By.cssSelector("p:nth-child(6) > input:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(6) > input:nth-child(1)")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector("tr:nth-child(2) > .colOrder > span"));
+            assert(elements.size() == 0);
+        }
+    }
+
+    @Test
+    public void createTaskEmptyTaskDescription() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("newTask_name")).click();
+        driver.findElement(By.name("newTask_name")).sendKeys("Тестовая задача");
+        driver.findElement(By.name("newTask_deadline")).click();
+        driver.findElement(By.name("newTask_deadline")).clear();
+        driver.findElement(By.name("newTask_deadline")).sendKeys("2021-12-31");
+        driver.findElement(By.cssSelector("p:nth-child(3) > #taskStatus_wip")).click();
+        driver.findElement(By.name("newTask_description")).click();
+        driver.findElement(By.name("newTask_description")).clear();
+        driver.findElement(By.cssSelector("select:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5) > option")).click();
+        driver.findElement(By.cssSelector("p:nth-child(6) > input:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(6) > input:nth-child(1)")).click();
+        {
+            List<WebElement> elements = driver.findElements(By.cssSelector("tr:nth-child(2) > .colOrder > span"));
+            assert(elements.size() == 0);
+        }
+    }
+
+    @Test
+    public void editTaskEmptyTaskName() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_name")).click();
+        driver.findElement(By.name("task_name")).clear();
+        driver.findElement(By.cssSelector("p:nth-child(7) > input")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_name")).click();
+        {
+            String value = driver.findElement(By.name("task_name")).getAttribute("value");
+            assertThat(value, is("Отредактированная задача"));
+        }
+    }
+
+    @Test
+    public void editTaskEmptyTaskDeadline() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_deadline")).click();
+        driver.findElement(By.name("task_deadline")).clear();
+        driver.findElement(By.cssSelector("p:nth-child(7) > input")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_deadline")).click();
+        {
+            String value = driver.findElement(By.name("task_deadline")).getAttribute("value");
+            assertThat(value, is("2021-12-30"));
+        }
+    }
+
+    @Test
+    public void editTaskWrongTaskDeadline() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_deadline")).click();
+        driver.findElement(By.name("task_deadline")).clear();
+        driver.findElement(By.name("task_deadline")).sendKeys("2021-10-30");
+        driver.findElement(By.cssSelector("p:nth-child(7) > input")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_deadline")).click();
+        {
+            String value = driver.findElement(By.name("task_deadline")).getAttribute("value");
+            assertThat(value, is("2021-12-30"));
+        }
+    }
+
+    @Test
+    public void editTaskEmptyOrderDescription() {
+        driver.findElement(By.name("task_managButton")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_description")).click();
+        driver.findElement(By.name("task_description")).clear();
+        driver.findElement(By.cssSelector("p:nth-child(7) > input")).click();
+        driver.findElement(By.name("task_changeButton")).click();
+        driver.findElement(By.name("task_description")).click();
+        {
+            String value = driver.findElement(By.name("task_description")).getAttribute("value");
+            assertThat(value, is("Отредактированное описание тестовой задачи"));
+        }
     }
 
 }

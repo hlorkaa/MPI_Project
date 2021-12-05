@@ -40,8 +40,9 @@ public class ManagerController {
             endTaskList = endTaskList - 100;
         }
 
-        tasks = tasks.subList(startTaskList, Math.min(tasks.size() - 1, endTaskList));
-
+        if (!tasks.isEmpty()) {
+            tasks = tasks.subList(startTaskList, Math.min(tasks.size(), endTaskList));
+        }
         model.put("today", today);
         model.put("tasks", tasks);
         model.put("workmen", workmen);
@@ -144,17 +145,17 @@ public class ManagerController {
             @RequestParam String task_deadline,
             @RequestParam String task_status,
             @RequestParam String task_description,
-            @RequestParam String task_workman,
+            @RequestParam String newTask_workman,
             Map<String, Object> model) {
         return () -> {
 
-            if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !task_workman.equals("")) {
+            if (task_id != 0 && !task_name.equals("") && !task_deadline.equals("") && !task_status.equals("") && !task_description.equals("") && !newTask_workman.equals("")) {
                 Task task = findTask(task_id);
                 task.setName(task_name);
                 task.setDeadline(task_deadline);
                 task.setStatus(task_status);
                 task.setDescription(task_description);
-                task.setWorkman(task_workman);
+                task.setWorkman(newTask_workman);
 
                 taskRepo.save(task);
             }

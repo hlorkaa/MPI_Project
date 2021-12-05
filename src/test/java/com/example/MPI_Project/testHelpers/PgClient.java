@@ -112,6 +112,34 @@ public class PgClient implements Closeable {
         }
     }
 
+    public void writeUserTableData() {
+        writeUserTableTestData("admin", "admin", Role.ADMIN);
+        writeUserTableTestData("workman", "workman", Role.WORKMAN);
+        writeUserTableTestData("manager", "manager", Role.MANAGER);
+        writeUserTableTestData("consultant", "consultant", Role.CONSULTANT);
+        writeUserTableTestData("security", "security", Role.SECURITY);
+        writeUserTableTestData("account", "account", Role.ACCOUNT);
+    }
+
+    public void writeTaskTableData(String name, String deadline, String status, String description, String workman) {
+        try {
+            String TEST_DATA_INSERT_QUERY = String.format("INSERT INTO %s " +
+                    "(id, deadline, description, name, status, workman) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)", TASK_TABLE_NAME);
+            try (PreparedStatement st = connection.prepareStatement(TEST_DATA_INSERT_QUERY)) {
+                st.setInt(1, 1000);
+                st.setString(2, deadline);
+                st.setString(3, description);
+                st.setString(4, name);
+                st.setString(5, status);
+                st.setString(6, workman);
+                st.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void writeUserTableTestData(String username, String password, Role role) {
         try {
             String TEST_DATA_INSERT_QUERY = String.format("INSERT INTO %s " +
@@ -119,7 +147,7 @@ public class PgClient implements Closeable {
                     "VALUES (?, ?, ?)", USER_TABLE_NAME);
             try (PreparedStatement st = connection.prepareStatement(TEST_DATA_INSERT_QUERY)) {
                 st.setString(1, password);
-                st.setString(2, role.getAuthority());
+                st.setInt(2, role.ordinal());
                 st.setString(3, username);
                 st.executeUpdate();
             }
@@ -141,8 +169,8 @@ public class PgClient implements Closeable {
     }
 
     public void truncateTable(String tableName) {
-        try(Statement statement = connection.createStatement()) {
-            statement.executeUpdate("TRUNCATE " + tableName);
+        try(PreparedStatement st = connection.prepareStatement("TRUNCATE " + tableName)) {
+            st.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

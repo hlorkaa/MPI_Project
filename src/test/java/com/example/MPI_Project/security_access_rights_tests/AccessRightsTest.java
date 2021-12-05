@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -33,50 +34,35 @@ public class AccessRightsTest {
 
     @Test
     public void adminAccessRightsTest() {
-        AuthTestHelper.authPart(driver,"admin", "admin");
-        driver.findElement(By.cssSelector("span")).click();
-        driver.findElement(By.cssSelector("span")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("admin"));
-        driver.findElement(By.name("exitButton")).click();
+        AuthTestHelper.auth(driver,"admin", "admin");
         driver.findElement(By.name("task_accButton")).click();
-        driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).click();
-        driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).click();
-        driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).click();
         driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).getText(), is("Бухгалтер"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_conButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Консультант"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Консультант"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_managButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Управляющий"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Управляющий"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_workButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Сотрудник"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Сотрудник"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_secButton")).click();
-        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
         driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Охранник"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_adminButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
         driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Пользователи"));
     }
 
     @Test
     public void accountAccessRightsTest() {
-        AuthTestHelper.authPart(driver,"account", "account");
-        driver.findElement(By.cssSelector("p:nth-child(2)")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("account"));
-        driver.findElement(By.name("exitButton")).click();
+        AuthTestHelper.auth(driver,"account", "account");
         driver.findElement(By.name("task_accButton")).click();
         driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector(".styled-table:nth-child(1) tr:nth-child(1) > td:nth-child(1)")).getText(), is("Бухгалтер"));
@@ -100,17 +86,14 @@ public class AccessRightsTest {
 
     @Test
     public void consultantAccessRightsTest() {
-        AuthTestHelper.authPart(driver,"consultant", "consultant");
-        driver.findElement(By.cssSelector("p:nth-child(2)")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("consultant"));
-        driver.findElement(By.name("exitButton")).click();
+        AuthTestHelper.auth(driver,"consultant", "consultant");
         driver.findElement(By.name("task_accButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_conButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Консультант"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Консультант"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_managButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
@@ -127,10 +110,7 @@ public class AccessRightsTest {
 
     @Test
     public void managerAccessRightsTest() {
-        AuthTestHelper.authPart(driver,"manager", "manager");
-        driver.findElement(By.cssSelector("span")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("manager"));
-        driver.findElement(By.name("exitButton")).click();
+        AuthTestHelper.auth(driver,"manager", "manager");
         driver.findElement(By.name("task_accButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
@@ -140,8 +120,8 @@ public class AccessRightsTest {
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_managButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Управляющий"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Управляющий"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_workButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
@@ -154,10 +134,7 @@ public class AccessRightsTest {
 
     @Test
     public void securityAccessRightsTest() {
-        AuthTestHelper.authPart(driver,"security", "security");
-        driver.findElement(By.cssSelector("span")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("security"));
-        driver.findElement(By.name("exitButton")).click();
+        AuthTestHelper.auth(driver,"security", "security");
         driver.findElement(By.name("task_accButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
@@ -175,15 +152,13 @@ public class AccessRightsTest {
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_secButton")).click();
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Охранник"));
     }
 
     @Test
     public void workmanAccessRightsTest() {
-        AuthTestHelper.authPart(driver,"workman", "workman");
-        driver.findElement(By.cssSelector("p:nth-child(2)")).click();
-        assertThat(driver.findElement(By.cssSelector("span")).getText(), is("workman"));
-        driver.findElement(By.name("exitButton")).click();
+        AuthTestHelper.auth(driver,"workman", "workman");
         driver.findElement(By.name("task_accButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
@@ -197,8 +172,8 @@ public class AccessRightsTest {
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1)")).getText(), is("Эта страница недоступна"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_workButton")).click();
-        driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
-        assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Сотрудник"));
+        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).click();
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(1)")).getText(), is("Сотрудник"));
         driver.findElement(By.name("exitButton")).click();
         driver.findElement(By.name("task_secButton")).click();
         driver.findElement(By.cssSelector("td:nth-child(1)")).click();
