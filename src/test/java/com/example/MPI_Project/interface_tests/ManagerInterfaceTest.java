@@ -34,6 +34,7 @@ public class ManagerInterfaceTest {
     @Test
     public void basicInterfaceTest() {
         driver.findElement(By.name("task_managButton")).click();
+        addTestTask();
         driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Управляющий"));
         {
@@ -59,7 +60,7 @@ public class ManagerInterfaceTest {
         driver.findElement(By.cssSelector("span")).click();
         assertThat(driver.findElement(By.cssSelector("span")).getText(), is("Отредактированная задача"));
         driver.findElement(By.cssSelector(".colTask:nth-child(3)")).click();
-        assertThat(driver.findElement(By.cssSelector("i")).getText(), is("Возникли проблемы"));
+        assertThat(driver.findElement(By.cssSelector("i")).getText(), is("Утверждено"));
         assertThat(driver.findElement(By.name("task_deleteButton")).getText(), is("Удалить"));
         assertThat(driver.findElement(By.name("task_changeButton")).getText(), is("Просмотр и редактирование"));
     }
@@ -168,6 +169,21 @@ public class ManagerInterfaceTest {
             String value = driver.findElement(By.cssSelector("form:nth-child(3) > p > input")).getAttribute("value");
             assertThat(value, is("Отмена"));
         }
+    }
+
+    public void addTestTask(){
+        while(!driver.findElements(By.cssSelector("span")).isEmpty()){
+            driver.findElement(By.name("task_deleteButton")).click();
+        }
+        driver.findElement(By.name("newTask_name")).click();
+        driver.findElement(By.name("newTask_name")).sendKeys("Отредактированная задача");
+        driver.findElement(By.name("newTask_deadline")).click();
+        driver.findElement(By.name("newTask_deadline")).sendKeys("2021-12-30");
+        driver.findElement(By.name("newTask_description")).click();
+        driver.findElement(By.name("newTask_description")).sendKeys("Отредактированное описание тестовой задачи");
+        driver.findElement(By.cssSelector("select:nth-child(5)")).click();
+        driver.findElement(By.cssSelector("select:nth-child(5) > option")).click();
+        driver.findElement(By.cssSelector("p:nth-child(6) > input:nth-child(1)")).click();
     }
 
 }

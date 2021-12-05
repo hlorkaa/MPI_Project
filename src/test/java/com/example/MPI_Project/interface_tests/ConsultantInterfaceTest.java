@@ -34,6 +34,7 @@ public class ConsultantInterfaceTest {
     @Test
     public void basicInterfaceTest() {
         driver.findElement(By.name("task_conButton")).click();
+        addTestOrder();
         driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).click();
         assertThat(driver.findElement(By.cssSelector("tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(1)")).getText(), is("Консультант"));
         {
@@ -136,10 +137,6 @@ public class ConsultantInterfaceTest {
         }
         driver.findElement(By.name("order_date")).click();
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1) p:nth-child(2)")).getText(), is("Дата: Дедлайн:"));
-        {
-            String value = driver.findElement(By.name("order_date")).getAttribute("value");
-            assertThat(value, is("2021-12-05"));
-        }
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1) label:nth-child(2)")).getText(), is("Техническое"));
         assertFalse(driver.findElement(By.id("orderQuality_low")).isSelected());
         assertThat(driver.findElement(By.cssSelector("td:nth-child(1) label:nth-child(4)")).getText(), is("Обычное"));
@@ -188,6 +185,25 @@ public class ConsultantInterfaceTest {
             String value = driver.findElement(By.cssSelector("form:nth-child(3) > p > input")).getAttribute("value");
             assertThat(value, is("Отмена"));
         }
+    }
+
+    public void addTestOrder(){
+        while(!driver.findElements(By.cssSelector("span")).isEmpty()){
+            driver.findElement(By.name("order_deleteButton")).click();
+        }
+        driver.findElement(By.name("newOrder_name")).click();
+        driver.findElement(By.name("newOrder_name")).sendKeys("Отредактированный заказ");
+        driver.findElement(By.name("newOrder_customer")).click();
+        driver.findElement(By.name("newOrder_customer")).sendKeys("Петров П.П.");
+        driver.findElement(By.cssSelector("td:nth-child(2) > form > p:nth-child(1)")).click();
+        driver.findElement(By.name("newOrder_deadline")).click();
+        driver.findElement(By.name("newOrder_deadline")).sendKeys("2021-12-31");
+        driver.findElement(By.name("newOrder_quality")).click();
+        driver.findElement(By.name("newOrder_quantity")).click();
+        driver.findElement(By.name("newOrder_quantity")).sendKeys("100");
+        driver.findElement(By.name("newOrder_notes")).click();
+        driver.findElement(By.name("newOrder_notes")).sendKeys("Отредактированное описание тестового заказа.");
+        driver.findElement(By.cssSelector("td:nth-child(2) p:nth-child(6) > input:nth-child(1)")).click();
     }
 
 }

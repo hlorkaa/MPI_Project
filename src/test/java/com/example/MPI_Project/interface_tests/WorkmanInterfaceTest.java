@@ -60,7 +60,7 @@ public class WorkmanInterfaceTest {
         driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask:nth-child(2)")).click();
         assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask > span")).getText(), is("Отредактированная задача"));
         driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask > i")).click();
-        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask > i")).getText(), is("Возникли проблемы"));
+        assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask > i")).getText(), is("Утверждено"));
         assertThat(driver.findElement(By.cssSelector("tr:nth-child(1) > .colTask .colTask")).getText(), is("Просмотр и редактирование"));
     }
 
