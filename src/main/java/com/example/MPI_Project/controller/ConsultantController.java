@@ -50,10 +50,10 @@ public class ConsultantController {
         amount = Double.valueOf(newQuantity * newQualityCoefficient - oldQuantity * oldQualityCoefficient);
 
         if (amount >= 0) {
-            type = "Income";
+            type = "income";
         }
         else {
-            type = "Outcome";
+            type = "outcome";
         }
         if (amount != 0) {
             Finances finances = new Finances(date, Math.abs(amount), type);
